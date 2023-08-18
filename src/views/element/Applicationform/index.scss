@@ -1,0 +1,90 @@
+.applicationform {
+	display: flex;
+	width: 100%;
+	height: 446px;
+	justify-content: center;
+	align-items: center;
+	// input框跟随主题色
+	.panda-design-input-focus {
+		border-color: var(--website-theme-color);
+	}
+	.panda-design-input:hover:not(.panda-design-input-disabled) {
+		border-color: var(--website-theme-color);
+	}
+	.applicationform-box {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		position: relative;
+
+		> div:nth-child(1) {
+			width: 100%;
+			height: 446px;
+			background: var(--website-theme-color);
+		}
+
+		> div:nth-child(2) {
+			position: absolute;
+			width: 938px;
+			height: 284px;
+			background: #ffffff;
+			box-shadow: 0px 20px 40px 0px rgba(0, 0, 0, 0.1);
+			border-radius: 6px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+
+			> div:nth-child(1) {
+				font-family: 'AlibabaPuHuiTi_2_85_Bold';
+				font-size: 24px;
+				line-height: 33px;
+				color: #15171f;
+				margin-top: 32px;
+			}
+
+			.applicationform-box-form {
+				margin-top: 32px;
+				display: flex;
+				flex-direction: column;
+				width: 672px;
+
+				> div:nth-child(1) {
+					display: flex;
+
+					> div:first-child {
+						margin-right: 32px;
+					}
+
+					.panda-design-form-item {
+						width: 320px;
+
+						.panda-design-form-item-control {
+							width: 100%;
+						}
+					}
+				}
+
+				> div:nth-child(2) {
+					width: 100%;
+
+					.panda-design-form-item-control {
+						width: 100%;
+					}
+
+					.panda-design-form-item {
+						margin-right: 0;
+					}
+				}
+
+				> div:nth-child(3) {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				}
+			}
+		}
+	}
+}

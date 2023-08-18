@@ -1,0 +1,31 @@
+.cardfill {
+	padding-bottom: 40px;
+}
+.cardfill-title {
+	color: #ffffff;
+	font-size: 24px;
+	line-height: 33px;
+	padding: 32px 0;
+	text-align: center;
+}
+.cardfill-list {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+
+	.cardfill-list-item {
+		.cardfill-list-item-title {
+			color: #ffffff;
+			font-size: 32px;
+			line-height: 45px;
+		}
+
+		.cardfill-list-item-subtitle {
+			margin-top: 8px;
+			color: #ffffff;
+			font-size: 16px;
+			line-height: 22px;
+		}
+	}
+}

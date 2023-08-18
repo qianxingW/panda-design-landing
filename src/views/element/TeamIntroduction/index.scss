@@ -1,0 +1,86 @@
+.TeamIntroduction {
+	.TeamIntroductionIn {
+		width: 1240px;
+		margin: 0 auto;
+	}
+
+	.center {
+		display: flex;
+		justify-content: space-between;
+		width: 1240px;
+
+		.box:not(:last-child) {
+			margin-right: 110px;
+		}
+
+		.box {
+			width: 340px;
+			// margin-top: 48px;
+
+			.img {
+				width: 240px;
+				height: 240px;
+				border-radius: 50%;
+				overflow: hidden;
+				margin: 0 auto;
+				position: relative;
+
+				&:hover {
+					transform: scale(1.01);
+				}
+			}
+
+			.title {
+				height: 22px;
+				margin-top: 32px;
+				text-align: center;
+				font-size: 16px;
+				font-weight: 600;
+				color: #3e4046;
+			}
+
+			.descript {
+				height: 17px;
+				margin-top: 8px;
+				text-align: center;
+				font-size: 12px;
+				font-weight: 400;
+				color: #7a8199;
+			}
+
+			.border {
+				width: 25px;
+				height: 2px;
+				margin: 8px auto 0;
+				background-color: var(--website-theme-color);
+			}
+
+			.detail {
+				width: 340px;
+				// height: 60px;
+				line-height: 20px;
+				margin-top: 24px;
+				font-size: 14px;
+				font-weight: 400;
+				color: #7a8199;
+				text-align: center;
+				// 省略号显示
+				overflow: hidden;
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 3;
+				text-align: justify;
+			}
+		}
+	}
+
+	.bot {
+		height: 40px;
+		margin-top: 40px;
+		text-align: center;
+
+		button {
+			line-height: 38px;
+		}
+	}
+}

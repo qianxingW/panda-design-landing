@@ -1,0 +1,65 @@
+.TeamText {
+	.TeamTextIn {
+		width: 1240px;
+		margin: 0 auto;
+		display: flex;
+		flex-wrap: wrap;
+		// justify-content: space-between;
+		// background-color: #5477ff;
+		.box:not(:nth-child(4n)) {
+			margin-right: 52px;
+		}
+		.box {
+			width: 270px;
+			text-align: justify;
+			margin-bottom: 16px;
+			.title {
+				height: 22px;
+				// margin-top: 32px;
+				text-align: center;
+				font-size: 16px;
+				font-weight: 600;
+				color: #3e4046;
+			}
+
+			.descript {
+				height: 17px;
+				margin-top: 8px;
+				text-align: center;
+				font-size: 12px;
+				font-weight: 400;
+				color: #7a8199;
+			}
+
+			.border {
+				width: 25px;
+				height: 2px;
+				margin: 8px auto 16px;
+				background-color: var(--website-theme-color);
+			}
+
+			.contents,
+			.detail {
+				line-height: 20px;
+				font-size: 14px;
+				font-weight: bold;
+				color: #51535b;
+				display: inline;
+			}
+			.detail {
+				margin-top: 0;
+				font-weight: normal;
+			}
+		}
+	}
+
+	.bot {
+		height: 40px;
+		margin-top: 40px;
+		text-align: center;
+
+		button {
+			line-height: 38px;
+		}
+	}
+}

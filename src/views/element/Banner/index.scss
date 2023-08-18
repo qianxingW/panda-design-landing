@@ -1,0 +1,99 @@
+.banner {
+	display: flex;
+	width: 100%;
+	height: 100vh;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	color: #fff;
+	overflow: hidden;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+
+	&:hover {
+		.banner-img {
+			transform: scale(1.02);
+		}
+	}
+
+	.banner-img {
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: 100% 100%;
+		transition: all 0.5s;
+	}
+
+	.banner-title {
+		height: 67px;
+		font-size: 48px;
+		line-height: 67px;
+		position: absolute;
+		top: 35%;
+		z-index: 1;
+	}
+
+	.banner-descript {
+		width: 656px;
+		font-size: 18px;
+		line-height: 25px;
+		position: absolute;
+		top: 46%;
+		z-index: 1;
+	}
+
+	.banner-buttonText {
+		width: 160px;
+		height: 48px;
+		font-size: 16px;
+		line-height: 48px;
+		position: absolute;
+		top: 58%;
+		border: solid 1px #fff;
+		border-radius: 24px 24px 24px 24px;
+		text-align: center;
+		cursor: pointer;
+		z-index: 1;
+	}
+
+	.banner-down {
+		width: 32px;
+		height: 32px;
+		line-height: 32px;
+		text-align: center;
+		position: absolute;
+		top: 92%;
+		border: solid 1px #fff;
+		border-radius: 50%;
+		cursor: pointer;
+		transition: all 0.2s;
+		z-index: 1;
+
+		&:hover {
+			transform: translateY(8px);
+		}
+	}
+
+	.banner-line {
+		position: absolute;
+		top: 46%;
+		width: 112px;
+		height: 4px;
+		background: #fff;
+	}
+
+	.banner-titleDec {
+		position: absolute;
+		top: 52%;
+		width: 391px;
+		height: 45px;
+		font-size: 32px;
+		text-align: center;
+	}
+}

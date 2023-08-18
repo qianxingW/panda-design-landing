@@ -1,0 +1,31 @@
+.container-header {
+  padding-top: 48px;
+  text-align: center;
+  padding-left: 30px;
+  padding-right: 30px;
+
+  .container-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #15171f;
+    line-height: 33px;
+  }
+
+  .container-line {
+    width: 39px;
+    height: 2px;
+    border-radius: 1px;
+    background-color: var(--website-theme-color);
+    margin: 8px auto;
+  }
+
+  .container-subtitle {
+    font-size: 12px;
+    font-family: 'PingFangSC-Regular, PingFang SC';
+    font-weight: 400;
+    color: #9197b0;
+    line-height: 17px;
+  }
+}
+
+.headLine {}

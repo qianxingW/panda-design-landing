@@ -1,0 +1,49 @@
+.imgCard-container-full {
+	display: flex;
+	justify-content: space-between;
+	width: 1240px;
+	margin: 0 auto;
+	.box {
+		width: 292px;
+		height: 302px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		background: #ffffff;
+		border-radius: 4px;
+		border: 1px solid #e9eaf2;
+		.img {
+			width: 100%;
+			height: 208px;
+			border-radius: 4px 4px 0px 0px;
+			overflow: hidden;
+			margin: 0 auto;
+			position: relative;
+		}
+
+		.title {
+			width: 100%;
+			height: 22px;
+			margin-top: 20px;
+			text-align: center;
+			font-size: 14px;
+			font-weight: 600;
+			color: #15171f;
+		}
+
+		.detail {
+			width: 100%;
+			height: 17px;
+			text-align: center;
+			margin-top: 8px;
+			font-size: 12px;
+			font-weight: 400;
+			color: #7a8199;
+			// 省略号显示
+			overflow: hidden;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 3;
+		}
+	}
+}

@@ -1,0 +1,18 @@
+// 上标题下图
+.BotImgAddTitle-bot {
+	width: 1240px;
+	height: 590px;
+	margin: 0 auto;
+	position: relative;
+}
+
+.setings-content {
+	.layoutSetup-wrap {
+		padding: 0 12px;
+		font-size: 12px;
+
+		> div.panda-design-radio-group {
+			align-items: center;
+		}
+	}
+}

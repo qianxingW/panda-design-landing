@@ -1,0 +1,66 @@
+// 左文右图-对半分、不对半分的
+.leftImgAddText {
+	.leftImgAddTextIn {
+		width: auto;
+		height: 340px;
+		margin: 0 auto;
+		display: flex;
+	}
+
+	// 小尺寸图片
+	.imgS {
+		width: 720px;
+		height: 340px;
+		position: relative;
+	}
+
+	// 大尺寸图片
+	.imgB {
+		width: 900px;
+		height: 340px;
+		position: relative;
+	}
+
+	.text {
+		// width: 720px;
+		flex: 1;
+		height: 340px;
+		padding-left: 100px;
+		padding-right: 64px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		background: #111628;
+		color: #fff;
+
+		h2 {
+			height: 33px;
+			margin: 0;
+			font-size: 24px;
+			line-height: 33px;
+			color: #fff;
+		}
+
+		h3 {
+			height: 20px;
+			margin-top: 8px;
+			margin-bottom: 24px;
+			font-size: 14px;
+			color: #7a8199;
+			line-height: 20px;
+		}
+
+		.content-text {
+			margin-bottom: 0;
+			font-size: 14px;
+			line-height: 20px;
+			// 省略号显示
+			overflow: hidden;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 8;
+			// 文本两端对齐
+			text-align: justify;
+		}
+	}
+}

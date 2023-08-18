@@ -1,0 +1,50 @@
+.detailWrap {
+	padding: 48px 0;
+	.detailWrapIn {
+		width: 1240px;
+		margin: 0 auto;
+		display: flex;
+	}
+	.detailWrapIn-pic {
+		width: 240px;
+		height: 240px;
+		border-radius: 50%;
+		overflow: hidden;
+		margin-right: 80px;
+	}
+
+	.right {
+		width: 802px;
+		h3 {
+			height: 22px;
+			font-size: 16px;
+			font-weight: 600;
+			color: #3e4046;
+		}
+		h5 {
+			height: 17px;
+			margin-top: 8px;
+			font-size: 12px;
+			font-weight: 400;
+			color: #7a8199;
+		}
+		hr {
+			margin-top: 24px;
+			border: 0;
+			border-top: 1px dashed #e9eaf2;
+		}
+		h6 {
+			height: 20px;
+			margin-top: 24px;
+			font-size: 14px;
+			font-weight: 600;
+			color: #15171f;
+		}
+		.content-text {
+			margin-top: 16px;
+			font-size: 12px;
+			font-weight: 400;
+			color: #7a8199;
+		}
+	}
+}

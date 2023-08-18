@@ -1,0 +1,110 @@
+.box-content {
+	width: 1240px;
+	margin: 0 auto;
+}
+
+.footer {
+	padding: 52px 0 24px 0;
+	background: #111628;
+
+	&-content {
+		display: flex;
+	}
+
+	&-company {
+	}
+
+	&-logo {
+		width: 125px;
+		height: 40px;
+		position: relative;
+	}
+
+	&-url {
+		margin-top: 16px;
+		font-size: 12px;
+		color: #7a8199;
+		line-height: 1em;
+	}
+
+	&-address {
+		margin-top: 16px;
+		font-size: 12px;
+		color: #7a8199;
+		line-height: 1em;
+	}
+
+	&-narbar {
+		flex: 1;
+	}
+
+	&-ul {
+		display: flex;
+		justify-content: center;
+		list-style: none;
+		list-style: none;
+
+		li {
+			list-style: none;
+		}
+
+		&-level-1 {
+			margin: 0 32px;
+
+			& > .footer-ul-item {
+				color: #ffffff;
+				margin-bottom: 19px;
+			}
+		}
+
+		&-level-2 {
+			li {
+				margin-top: 14px;
+				line-height: 1em;
+			}
+		}
+
+		&-item {
+			font-size: 12px;
+			color: #7a8199;
+			line-height: 12px;
+		}
+	}
+
+	&-info {
+		.companyName {
+			font-size: 12px;
+			color: #ffffff;
+			line-height: 17px;
+			margin-bottom: 28px;
+		}
+
+		.erweima {
+			.erweima-pic {
+				position: relative;
+				width: 120px;
+				height: 120px;
+				margin-bottom: 8px;
+			}
+
+			p {
+				width: 120px;
+				text-align: center;
+				font-size: 12px;
+				color: #7a8199;
+				line-height: 17px;
+			}
+		}
+	}
+
+	.icp-content {
+	}
+
+	.icp {
+		margin-top: 16px;
+		font-size: 12px;
+		color: #7a8199;
+		line-height: 17px;
+		text-align: center;
+	}
+}

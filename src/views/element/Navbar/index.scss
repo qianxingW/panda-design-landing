@@ -1,0 +1,152 @@
+.view-content {
+	.navbar-wrap {
+		.navbar {
+			position: fixed;
+			z-index: 99;
+		}
+	}
+}
+
+.navbar-wrap {
+	height: 64px;
+	display: flex;
+
+	.navbar {
+		flex: 1;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 3;
+		background-color: #fff;
+
+		&.navbar-shadow {
+			box-shadow: 0px 4px 15px 0 rgba(0, 0, 0, 0.1);
+		}
+
+		.box-content {
+			display: flex;
+			align-items: center;
+		}
+
+		&-logo {
+			position: relative;
+      .panda-design-image{
+        width: 135px;
+        height: 40px;
+      }
+		}
+
+		&-ul {
+			flex: 1;
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			height: 64px;
+			list-style: none;
+
+			li {
+				display: inline-block;
+			}
+
+			&-level-1 {
+				height: 64px;
+				position: relative;
+
+				&:hover {
+					.navbar-ul-level-2 {
+						display: block;
+					}
+				}
+			}
+
+			&-item {
+				padding: 0 16px;
+				font-size: 14px;
+				line-height: 64px;
+				cursor: pointer;
+
+				&:hover,
+				&.active {
+					color: var(--website-theme-color);
+				}
+			}
+
+			&-level-2 {
+				position: absolute;
+				background: #fff;
+				box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.09);
+				top: 45px;
+				left: 0;
+				min-width: max-content;
+				right: 0;
+				padding: 4px 0;
+				display: none;
+				z-index: 99;
+				border-radius: 4px;
+
+				.navbar-ul-item {
+					line-height: 20px;
+				}
+
+				li {
+					display: block;
+					padding: 8px 0;
+					text-align: center;
+
+					span {
+						white-space: nowrap;
+					}
+
+					&:hover,
+					&.active {
+						color: var(--website-theme-color);
+					}
+				}
+			}
+		}
+
+		&-login {
+			display: flex;
+			align-items: center;
+			padding-left: 24px;
+
+			& > * {
+				margin-left: 16px;
+			}
+			button:hover {
+				color: #fff;
+				background-color: var(--website-theme-color);
+				border-color: var(--website-theme-color);
+			}
+		}
+	}
+}
+
+.setings-navbar-item {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	// padding: 0 12px;
+	height: 40px;
+
+	&-content {
+		flex: 1;
+	}
+
+	&-edit {
+		margin-left: 15px;
+		display: block;
+	}
+}
+
+
+.narbar-investor{
+  font-size: 14px;
+  padding-left: 24px;
+  cursor: pointer;
+  &:hover{
+    color: var(--website-theme-color);
+    
+  }
+}

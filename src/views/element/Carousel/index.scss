@@ -1,0 +1,101 @@
+.carousel {
+	.swiper {
+		height: 325px;
+
+		// 分页器
+		.swiper-pagination {
+			bottom: 0;
+
+			.swiper-pagination-bullet {
+				width: 12px;
+				height: 12px;
+				border: 2px solid #fff;
+				background-color: #a6a6a6;
+			}
+
+			.swiper-pagination-bullet-active {
+				width: 10px;
+				height: 10px;
+				border: 2px solid #000;
+				background-color: transparent;
+			}
+		}
+
+		.swiper-wrapper {
+			width: 100%;
+
+			.swiper-slide {
+				width: 560px !important;
+				// width: 80%;
+				height: 255px;
+				margin-right: 0;
+			}
+
+			.swiper-slide-active {
+				// transform: scale(1.1);
+			}
+		}
+
+		.slider {
+			width: 560px;
+			height: 255px;
+			padding: 32px 24px;
+			background-color: #fff;
+			box-shadow: 0px 10px 40px 0px rgba(0, 0, 0, 0.06);
+			// box-shadow:0 6px 16px -8px #00000014, 0 9px 28px #0000000d, 0 12px 48px 16px #00000008;
+
+			border-radius: 6px;
+
+			.slider-top {
+				display: flex;
+
+				.left {
+					width: 124px;
+					height: 65px;
+					margin-right: 21px;
+					position: relative;
+
+					.left-pic {
+						width: 120px;
+						height: 48px;
+					}
+				}
+
+				.right {
+					h4 {
+						height: 25px;
+						font-size: 18px;
+						color: #15171f;
+						line-height: 25px;
+					}
+
+					.title {
+						height: 20px;
+						margin-top: 4px;
+						font-size: 14px;
+						color: #15171f;
+						line-height: 20px;
+					}
+				}
+			}
+
+			.slider-bot {
+				font-size: 14px;
+				color: #7a8199;
+				line-height: 20px;
+			}
+		}
+
+		.slider2 {
+			background-color: green;
+		}
+
+		.slider3 {
+			background-color: blue;
+		}
+
+		.slider4 {
+			background-color: #5477ff;
+		}
+	}
+}

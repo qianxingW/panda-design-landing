@@ -1,0 +1,132 @@
+// 带标题的
+.imgAddText {
+	.imgAddTextIn {
+		width: 1240px;
+		margin: 0 auto;
+	}
+
+	.top {
+		h2 {
+			margin: 0;
+			font-size: 24px;
+			color: #15171f;
+			text-align: center;
+		}
+
+		.border {
+			width: 39px;
+			height: 2px;
+			margin: 8px auto;
+			background-color: var(--website-theme-color);
+		}
+
+		span {
+			display: block;
+			text-align: center;
+			font-size: 12px;
+			color: #9197b0;
+			margin-bottom: 48px;
+		}
+	}
+	.center {
+		width: 1240px;
+		display: flex;
+		align-items: center;
+		.left {
+			order: 1;
+			margin-right: 64px;
+		}
+		.right{
+			order: 2
+		}
+		// 大尺寸图片
+		.imgB {
+			width: 796px;
+			height: 442px;
+			position: relative;
+		}
+
+		// 小尺寸图片
+		.imgS {
+			width: 590px;
+			height: 302px;
+			position: relative;
+		}
+
+		.textimgB {
+			width: 380px;
+			// height: 442px;
+		}
+
+		.textimgS {
+			width: 586px;
+			// height: 302px;
+		}
+
+		.text {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+
+			h2 {
+				height: 33px;
+				margin: 0;
+				font-size: 20px;
+				color: #15171f;
+				line-height: 33px;
+			}
+
+			h3 {
+				height: 20px;
+				margin-top: 8px;
+				margin-bottom: 24px;
+				font-size: 14px;
+				color: #7a8199;
+				line-height: 20px;
+			}
+
+			.content-text {
+				margin-bottom: 0;
+				font-size: 14px;
+				color: #15171f;
+				line-height: 20px;
+				// 省略号显示
+				// overflow: hidden;
+				// display: -webkit-box;
+				// -webkit-box-orient: vertical;
+				// -webkit-line-clamp: 10;
+				// 文本两端对齐
+				text-align: justify;
+			}
+
+			button {
+				margin-top: 32px;
+			}
+		}
+	}
+}
+
+// 暗色
+.imgAddText.light {
+	.top {
+		h2,
+		span {
+			color: white;
+		}
+
+		div.border {
+			background-color: white;
+		}
+	}
+
+	.center > div.text {
+		h2,
+		h3,
+		p {
+			color: white;
+		}
+		.content-text {
+			color: white;
+		}
+	}
+}

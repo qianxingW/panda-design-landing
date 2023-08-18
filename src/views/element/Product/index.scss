@@ -1,0 +1,28 @@
+.product-box {
+	.swiperWrap {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+}
+
+@keyframes img {
+	0% {
+		transform: scale(0);
+	}
+
+	100% {
+		transform: scale(1);
+	}
+}
+
+@keyframes text {
+	0% {
+		transform: scale(0);
+	}
+
+	100% {
+		transform: scale(1);
+		visibility: visible;
+	}
+}
