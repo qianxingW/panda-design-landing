@@ -79,9 +79,9 @@ function ContentController(props) {
 	}
 
 	const onResetPagesConfig = () => {
-		setPagesConfig({
+		dispatch(setPagesConfig({
 			...pagesConfig,
-		})
+		}))
 	}
 
 	useEffect(() => {
@@ -219,14 +219,14 @@ function ContentController(props) {
 
 	// 清空状态
 	const clearPopup = () => {
-		setHoverElementId(null)
-		setHoverElement({ current: null })
-		setActiveElementId(null)
-		setActiveElement({ current: null })
+		// setHoverElementId(null)
+		// setHoverElement({ current: null })
+		// setActiveElementId(null)
+		// setActiveElement({ current: null })
 		// setEditData(null)
 	}
 
-	// 清空状态
+	// 清空移入状态
 	const clearHoverPopup = () => {
 		setHoverElementId(null)
 	}
@@ -429,12 +429,12 @@ function ContentController(props) {
 							<>
 								{componentIndex !== 0 && (
 									<div className="item" onClick={handlePrev}>
-										<DownOutlined />
+										<UpOutlined />
 									</div>
 								)}
 								{componentIndex != activePage.content.length - 1 && (
 									<div className="item" onClick={handleNext}>
-										<UpOutlined />
+										<DownOutlined />
 									</div>
 								)}
 							</>

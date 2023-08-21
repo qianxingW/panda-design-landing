@@ -1,23 +1,24 @@
 import { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { addPagesConfig, editPagesConfig, delPagesConfig, setActivePageKey } from '../../../redux/actions';
+import { homeUrl } from '../../../redux/template.config';
 
-import { Drawer, Input, Dropdown } from 'antd';
+import { Drawer, Input, Dropdown, Modal } from 'antd';
 import {
-  PlusCircleOutlined,
-  EllipsisOutlined
+	PlusCircleOutlined,
+	EllipsisOutlined
 } from '@ant-design/icons';
+
+import { uuid } from '@utils';
 import clsx from 'clsx'
 
 function Item(props) {
 	const pagesConfig = useSelector(state => state.pagesConfig)
-
-	const { data = {}, onDelete, editData, onChange, index, ...prop } = props
+	const activePageKey = useSelector(state => state.activePageKey)
+	const dispatch = useDispatch()
+	const { data = {}, onDelete, editData, onChange, index } = props
 	const [edit, setEdit] = useState(false)
 	const [editValue, setEditValue] = useState(data.name)
-
-	const dispatch = useDispatch()
-
-	const activePageKey = useSelector(state => state.activePageKey)
 
 	useEffect(() => {
 		if (editData) {
@@ -27,16 +28,36 @@ function Item(props) {
 		}
 	}, [editData])
 
-  const items = [
-    {
-      key: '1',
-      label: "编辑",
-    },
-    {
-      key: '2',
-      label: "删除",
-    }
-  ];
+	const items = [
+		{
+			key: 'edit',
+			label: "编辑",
+		},
+		{
+			key: 'del',
+			label: "删除",
+		}
+	];
+
+	const onClick = ({ key }) => {
+		if(key === 'edit') {
+			setEdit(!edit);
+		} else {
+			if(data.url != homeUrl) return;
+
+			Modal.confirm({
+				title: '提示',
+				content: '删除后无法恢复，是否继续？',
+				className: 'user-modal-confirm',
+				onCancel: () => {},
+				onConfirm: () => {
+					let prev = pagesConfig.pages[index - 1].url
+					dispatch(setActivePageKey(prev));
+					dispatch(delPagesConfig(data));
+				},
+			})
+		}
+	}
 
 	return (
 		<div
@@ -51,7 +72,7 @@ function Item(props) {
 						onClick={() => {
 							if (edit) return
 							onChange()
-							// setActivePage(data.url)
+							dispatch(setActivePageKey(data.url))
 						}}
 					>
 						{data.name}
@@ -60,29 +81,23 @@ function Item(props) {
 				{edit && (
 					<Input
 						value={editValue}
-						onChange={v => {
-							setEditValue(v)
+						onChange={e => {
+							setEditValue(e.target.value)
 						}}
-						onBlur={v => {
+						onBlur={() => {
 							if (editValue) {
 								if (editData) {
-									// dispatch({
-									// 	type: ActionTypes.ADD_PAGESCONFIG,
-									// 	data: {
-									// 		name: editValue,
-									// 		url: uuid(),
-									// 		content: [],
-									// 	},
-									// })
+									dispatch(addPagesConfig({
+										name: editValue,
+										url: uuid(),
+										content: [],
+									}))
 								} else {
-									// dispatch({
-									// 	type: ActionTypes.EDIT_PAGESCONFIG,
-									// 	data: {
-									// 		...data,
-									// 		name: editValue,
-									// 		content: data.content,
-									// 	},
-									// })
+									dispatch(editPagesConfig({
+										...data,
+										name: editValue,
+										content: data.content,
+									}))
 								}
 								setEdit(false)
 								onDelete()
@@ -94,94 +109,56 @@ function Item(props) {
 				)}
 			</div>
 			<div className="addPage-item-edit">
-        <Dropdown menu={{ items }}>
-        <EllipsisOutlined />
-        </Dropdown>
-				{/* <Operation menu={{ items }}>
-					<Operation.Popup position="bottom-left">
-						<Operation.Item onClick={() => setEdit(!edit)}>编辑</Operation.Item>
-						{data.url != homeUrl && (
-							<Operation.Item
-								onClick={() => {
-									Modal.confirm({
-										title: '提示',
-										content: '删除后无法恢复，是否继续？',
-										className: 'user-modal-confirm',
-										onCancel: () => {},
-										onConfirm: () => {
-											let prev = pagesConfig.pages[index - 1].url
-
-											dispatch({
-												type: ActionTypes.SET_ACTIVEPAGEKEY,
-												data: prev,
-											})
-											dispatch({
-												type: ActionTypes.DEL_PAGESCONFIG,
-												data: data,
-											})
-										},
-									})
-								}}
-							>
-								删除
-							</Operation.Item>
-						)}
-					</Operation.Popup> */}
-				{/* </Operation> */}
+				<Dropdown menu={{ items, onClick }}>
+					<EllipsisOutlined />
+				</Dropdown>
 			</div>
 		</div>
 	)
 }
 
 const AddPage = (props) => {
-  const dispatch = useDispatch()
 	const pagesConfig = useSelector(state => state.pagesConfig)
 
-	const { onChange } = props
+	const { onChange, open, onCloseDrawer } = props
 
 	const [editData, setEditData] = useState(null)
-
 	const [search, setSearch] = useState('')
 
-  return (
-    <Drawer
-      title="网站页面"
-      placement="left"
-      width={320}
-      open={false}
-      mask={false}
-      onCancel={() => {
-        // setComponentDrawerVisible(false);
-      }}
-      onConfirm={() => {
-        // setComponentDrawerVisible(false);
-      }}
-    >
-      <div className="addPage">
-			<div className={'addPage-search'}>
-				<div className="addPage-search-input">
-					<Input
-						icon={<PlusCircleOutlined />}
-						onChange={v => {
-							setSearch(v)
-						}}
-						onInput={v => {}}
-					/>
+	return (
+		<Drawer
+			className='panda-drawer'
+			title="网站页面"
+			placement="left"
+			width={320}
+			open={open}
+			mask={false}
+			onClose={onCloseDrawer}
+		>
+			<div className="addPage">
+				<div className={'addPage-search'}>
+					<div className="addPage-search-input">
+						<Input
+							icon={<PlusCircleOutlined />}
+							onChange={v => {
+								setSearch(v)
+							}}
+						/>
+					</div>
+					<div className="addPage-add">
+						<PlusCircleOutlined
+							onClick={() => {
+								setEditData({
+									name: '',
+									url: '',
+									type: 'edit',
+								})
+							}}
+						/>
+					</div>
 				</div>
-				<div className="addPage-add">
-					<PlusCircleOutlined
-						onClick={() => {
-							setEditData({
-								name: '',
-								url: '',
-								type: 'edit',
-							})
-						}}
-					/>
-				</div>
-			</div>
-			<div className="addPage-list">
-				{pagesConfig?.pages?.filter(item => {
+				<div className="addPage-list">
+					{pagesConfig?.pages?.filter(item => {
 						if (!search) {
 							return item
 						} else {
@@ -190,31 +167,31 @@ const AddPage = (props) => {
 							}
 						}
 					})
-					.map((item, index) => (
+						.map((item, index) => (
+							<Item
+								data={item}
+								key={index}
+								index={index}
+								onChange={onChange}
+								onDelete={() => {
+									setEditData(null)
+								}}
+							/>
+						))}
+					{editData && (
 						<Item
-							data={item}
-							key={index}
-							index={index}
+							editData={editData}
+							data={editData}
 							onChange={onChange}
 							onDelete={() => {
 								setEditData(null)
 							}}
 						/>
-					))}
-				{editData && (
-					<Item
-						editData={editData}
-						data={editData}
-						onChange={onChange}
-						onDelete={() => {
-							setEditData(null)
-						}}
-					/>
-				)}
+					)}
+				</div>
 			</div>
-		</div>
-    </Drawer>
-  )
+		</Drawer>
+	)
 }
 
 export default AddPage;

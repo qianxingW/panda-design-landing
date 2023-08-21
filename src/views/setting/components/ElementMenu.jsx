@@ -3,7 +3,9 @@ import { Drawer, Tooltip } from 'antd';
 import * as element from '../../element';
 import thumbnail from '../../../static/images/detail/thumbnail.png'
 
-const ElementMenu = () => {
+const ElementMenu = (props) => {
+  const { open, onCloseDrawer } = props;
+
   const onDragStart = (e) => {
     // dragStart.current = true;
     e.dataTransfer.setData('drayType', 'add');
@@ -60,17 +62,13 @@ const ElementMenu = () => {
 
   return (
     <Drawer
+      className='panda-drawer'
       title="添加元素"
       placement="left"
       width={320}
-      open={true}
+      open={open}
       mask={false}
-      onCancel={() => {
-        // setComponentDrawerVisible(false);
-      }}
-      onConfirm={() => {
-        // setComponentDrawerVisible(false);
-      }}
+      onClose={onCloseDrawer}
     >
       <div className="left-menu">
         {elementList}

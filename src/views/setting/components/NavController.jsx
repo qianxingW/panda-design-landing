@@ -1,14 +1,21 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { setActivePageKey } from '../../../redux/actions';
+
 import { Button, Select, Tooltip } from 'antd';
 import {
   PlusCircleOutlined,
   SnippetsOutlined,
   LaptopOutlined,
+  SkinOutlined,
 } from '@ant-design/icons';
 
-// 静态资源
 import logo from '../../../static/images/logo.png';
 
-const NavController = () => {
+const NavController = (props) => {
+  const { onNavClick } = props;
+  const pagesConfig = useSelector(state => state?.pagesConfig);
+	const activePage = useSelector(state => state.pagesConfig.pages.filter(item => item.url == state.activePageKey)[0])
+  const dispatch = useDispatch()
 
   const handleSavePageConfig = () => {
 
@@ -23,54 +30,33 @@ const NavController = () => {
       title: "添加元素",
       icon: <PlusCircleOutlined />,
       onClick: () => {
-        // setComponentDrawerVisible(true);
-        // setPageThemeVisible(false);
-        // setPageDrawerVisible(false);
-        // setAgreementVisible(false);
+        onNavClick('element')
       },
     },
     {
       title: "页面管理",
       icon: <SnippetsOutlined />,
       onClick: () => {
-        // setComponentDrawerVisible(false)
-        // 						setPageThemeVisible(false)
-        // 						setAgreementVisible(false)
-        // 						setPageDrawerVisible(true)
-        // 						setPhishingVisible(false)
+        onNavClick('page')
       },
     },
     {
       title: "主题色",
-      icon: <SnippetsOutlined />,
+      icon: <SkinOutlined />,
       onClick: () => {
-        // setComponentDrawerVisible(false)
-        // 						setPageThemeVisible(false)
-        // 						setAgreementVisible(false)
-        // 						setPageDrawerVisible(true)
-        // 						setPhishingVisible(false)
+        onNavClick('theme')
       },
     },
     {
       title: "投资者协议",
       icon: <SnippetsOutlined />,
       onClick: () => {
-        // setComponentDrawerVisible(false)
-        // 						setPageThemeVisible(false)
-        // 						setAgreementVisible(false)
-        // 						setPageDrawerVisible(true)
-        // 						setPhishingVisible(false)
       },
     },
     {
       title: "防钓鱼提示",
       icon: <SnippetsOutlined />,
       onClick: () => {
-        // setComponentDrawerVisible(false)
-        // 						setPageThemeVisible(false)
-        // 						setAgreementVisible(false)
-        // 						setPageDrawerVisible(true)
-        // 						setPhishingVisible(false)
       },
     },
   ].map((item, i) => {
@@ -104,17 +90,16 @@ const NavController = () => {
         <div className="line"></div>
         <div className="page">
           <Select
-            // value={activePage ? activePage.url : null}
-            // options={pagesConfig.pages.map((item) => {
-            //   return {
-            //     label: item.name,
-            //     value: item.url,
-            //   };
-            // })}
+            value={activePage ? activePage.url : null}
+            options={pagesConfig.pages.map((item) => {
+              return {
+                label: item.name,
+                value: item.url,
+              };
+            })}
             bordered={false}
-            onChange={() => {
-              // setActivePage(v);
-              // setActiveData(null);
+            onChange={(v) => {
+              dispatch(setActivePageKey(v))
             }}
           ></Select>
         </div>

@@ -137,7 +137,8 @@ export const findTargetIndex = (e, dragContent, activePage, pagesRefList) => {
  * @returns 
  */
 export const handleRgbaColor = color => {
-	return `rgba(${color.rgb.r},${color.rgb.g},${color.rgb.b},${color.rgb.a})`
+	const {r, g, b, a } = color.metaColor;
+	return `rgba(${r},${g},${b},${a})`
 }
 
 export const handleUrl = img => {

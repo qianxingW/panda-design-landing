@@ -3,7 +3,6 @@ import React, { useRef, useImperativeHandle, useMemo } from 'react'
 
 // 引入组件列表
 import * as element from '../../element'
-// import * as components from '@/components/index'
 
 import clsx from 'clsx'
 
@@ -17,9 +16,9 @@ const Dray = (props, ref) => {
 
 	const WrappedComponent = useMemo(() => {
 		// TUDO: 需要做配置信息和props的合并
-		let config = element[data.componentName].render.config
+		// let config = element[data.componentName].render.config
 		// handleConfig(data.props, config);
-		return element[data.componentName] || components[data.componentName]
+		return element[data.componentName];
 	}, [data.componentName])
 
 	const wrappedComponentData = {

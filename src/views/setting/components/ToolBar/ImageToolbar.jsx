@@ -2,7 +2,7 @@ import { useRef } from 'react'
 
 import _ from 'lodash'
 
-importpandaad, Tooltip } from 'antd'
+import { Upload, Tooltip } from 'antd'
 import {
 	FormOutlined,
 	LinkOutlined,

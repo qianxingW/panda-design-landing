@@ -4,7 +4,7 @@ import { useState } from 'react'
 import clsx from 'clsx'
 import _ from 'lodash'
 
-importpandact, Popover, Tooltip } from 'antd';
+import { Select, Popover, Tooltip } from 'antd';
 import {
 	FormOutlined,
 	BoldOutlined,

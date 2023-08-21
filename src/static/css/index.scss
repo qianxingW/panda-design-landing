@@ -538,3 +538,10 @@ body,
     }
   }
 }
+
+// 配置drawer-title和close调换位置
+.panda-drawer {
+  .ant-drawer-header-title {
+    flex-direction: row-reverse;
+  }
+}

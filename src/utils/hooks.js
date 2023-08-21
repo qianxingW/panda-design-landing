@@ -60,3 +60,19 @@ export const useConfig = (activeData, pagesRefList) => {
 
 	return [config, setConfig]
 }
+
+/**
+ * 根据url获取key
+ * @param {*} url 
+ * @returns 
+ */
+export const useActivePage = (url) => {
+	const pagesConfig = useSelector(state => state.pagesConfig)
+	let activePageKey = pagesConfig.pages.filter(item => {
+		if (item.url === url) {
+			return item
+		}
+	})[0].url;
+
+	return [activePageKey]
+}
