@@ -5,28 +5,18 @@ import { cloneDeep } from 'lodash'
 
 import { homeUrl, defaultPagesConfig } from "../template.config";
 
-
-export function menu(state = [], action) {
-	let data = null
+export function activePageKey(state = homeUrl, action) {
 	switch (action.type) {
-		case ActionTypes.SET_MENU:
+		case ActionTypes.SET_ACTIVEPAGEKEY:
 			return action.data
-		case ActionTypes.ADD_MENU:
-			return [...state, action.data]
-		case ActionTypes.EDIT_MENU:
-			data = state.map(item => (item.url == action.data.url ? (item = action.data) : item))
-			return data
-		case ActionTypes.DEL_MENU:
-			data = state.filter(item => item.url !== action.data.url)
-			return data
 		default:
 			return state
 	}
 }
 
-export function activePageKey(state = homeUrl, action) {
+export function activeElementId(state = null, action) {
 	switch (action.type) {
-		case ActionTypes.SET_ACTIVEPAGEKEY:
+		case ActionTypes.ACTIVE_COMPONENT_ID:
 			return action.data
 		default:
 			return state
@@ -99,33 +89,10 @@ export function pagesConfig(state = cloneDeep(defaultPagesConfig), action) {
 	}
 }
 
-export function pagesIndexConfig(state = null, action) {
-	switch (action.type) {
-		case ActionTypes.SET_INDEX_PAGESCONFIG:
-			if (!action.data) {
-				return JSON.parse(defaultPagesConfig)
-			}
-			return action.data
-		default:
-			return state
-	}
-}
-
-export function pagesPreviewConfig(state = null, action) {
-	switch (action.type) {
-		case ActionTypes.SET_PREVIEW_PAGESCONFIG:
-			return action.data
-		default:
-			return state
-	}
-}
-
 const reducers = combineReducers({
-  menu,
   activePageKey,
+	activeElementId,
   pagesConfig,
-  pagesIndexConfig,
-  pagesPreviewConfig,
 });
 
 export default reducers;

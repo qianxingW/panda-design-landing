@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { useSelector, useDispatch, useStore } from 'react-redux';
-import { setPagesConfig } from '../../../redux/actions';
+import { setPagesConfig, setActiveElementId } from '../../../redux/actions';
 
 import { Spin } from 'antd';
 import {
@@ -21,15 +21,16 @@ import * as element from '../../element';
 import { uuid, findElement, findSelectElementTarget, findTargetIndex, setSettingPagesConfig } from '@utils';
 import { useActiveComponent } from '@utils/hooks';
 
-function ContentController(props) {
+function ContentController() {
 	const dispatch = useDispatch()
 	const router = useLocation()
 	const store = useStore()
 	const pagesConfig = useSelector(state => state.pagesConfig)
 	const activePageKey = useSelector(state => state.activePageKey)
+	const activeElementId = useSelector(state => state.activeElementId)
 	const activePage = useSelector(state => state.pagesConfig?.pages?.filter(item => item.url == state.activePageKey)[0])
 
-	const [dropIndex, setDrop] = useState(1)
+	const [dropIndex,] = useState(1)
 
 	// 配置链接
 	const [linkVisible, setLinkVisible] = useState(false)
@@ -38,15 +39,14 @@ function ContentController(props) {
 	const [hoverElementId, setHoverElementId] = useState(null);
 	const [hoverElement, setHoverElement] = useState({ current: null })
 
-	// 点击选中的组件
-	const [activeElementId, setActiveElementId] = useState(null)
+	// 选中的组件
 	const [activeElement, setActiveElement] = useState({ current: null })
 
-	// 修改数据
-	const [editData, setEditData] = useState(null)
+	// 修改文字
+	const [editTextData, setEditTextData] = useState(null)
 	const [componentIndex, setComponentIndex] = useState(null)
 
-	const [EditComponent, activeComponentData] = useActiveComponent(activeElementId)
+	const [, activeComponentData] = useActiveComponent(activeElementId)
 
 	const pagesRefList = useRef({})
 
@@ -54,7 +54,6 @@ function ContentController(props) {
 	const dragContent = useRef(null)
 	const dragScroll = useRef(null)
 	const settingLinkCallback = useRef(null)
-	const saveAstemplateRef = useRef(null)
 
 	useEffect(() => {
 		window.addEventListener('beforeunload', event => {
@@ -102,52 +101,32 @@ function ContentController(props) {
 		}
 	}, [activeElementId, activePage, activePageKey])
 
-	const findData = () => {
-		if (!activeElementId || !activeComponentData) return
-		let classify = activeElement.current.dataset.classify
-		let index = activeElement.current.dataset.index
-		if (pagesRefList.current[activeElementId].parameter.componentName != activeComponentData.componentName) return
-		if (classify == 'tabList') {
-			return activeComponentData.props.config.tabList.list[index][dataSetName]
-		} else if (classify == 'list') {
-			return activeComponentData.props.config.list[index][dataSetName]
-		} else {
-			return activeComponentData.props[dataSetName]
-		}
-	}
-
+	// 修改的节点name
 	const dataSetName = useMemo(() => {
 		if (!activeElement.current) return null
 		return activeElement.current.dataset.name
 	}, [activeElement])
 
+	const findData = () => {
+		if (!activeElementId || !activeComponentData) return
+		let classify = activeElement.current.dataset.classify;
+		let index = activeElement.current.dataset.index;
+
+		if (pagesRefList.current[activeElementId].parameter.componentName != activeComponentData.componentName) return;
+		if (classify == 'tabList') {
+			return activeComponentData.props.config.tabList.list[index][dataSetName];
+		} else if (classify == 'list') {
+			return activeComponentData.props.config.list[index][dataSetName];
+		} else {
+			return activeComponentData.props[dataSetName];
+		}
+	}
+
+	// 编辑的节点数据
 	const editElementData = useMemo(() => {
 		if (!dataSetName || !activeElement.type) return null
 		return findData()
 	}, [dataSetName, activeElement, activeElementId, activeComponentData])
-
-	useEffect(() => {
-		if (!dataSetName && !activeElement.type && !activeComponentData && !activeElement.current) return
-		if (activeElement.type == 'text') {
-			let style = window.getComputedStyle(activeElement.current, null)
-			let styleDefault = {
-				color: style['color'],
-				textAlign: style['textAlign'],
-				fontFamily: style['fontFamily'],
-				letterSpacing: style['letterSpacing'],
-				lineHeight: style['lineHeight'],
-				fontSize: style['fontSize'],
-				fontWeight: style['fontWeight'],
-				textDecoration: style['textDecoration'],
-			}
-			let propsAttr = findData()
-			if (propsAttr) {
-				propsAttr.style = styleDefault
-				onPagesConfigChange()
-			}
-		}
-	}, [dataSetName, activeElement, activeComponentData])
-
 
 	const dropOndrop = e => {
 		e.preventDefault()
@@ -223,7 +202,7 @@ function ContentController(props) {
 		// setHoverElement({ current: null })
 		// setActiveElementId(null)
 		// setActiveElement({ current: null })
-		// setEditData(null)
+		// setEditTextData(null)
 	}
 
 	// 清空移入状态
@@ -240,16 +219,13 @@ function ContentController(props) {
 			return
 		}
 
-		setActiveElementId(hoverElementId)
+		dispatch(setActiveElementId(hoverElementId))
 		setActiveElement(hoverElement)
 	}
 
 	// move 查询组件
 	const handleMove = e => {
 		e.persist()
-		if (dragStart.current == true) {
-			let targetIndex = findTargetIndex(e)
-		}
 		// 查找hover的组件
 		let hoverPage = findElement(e, pagesRefList.current)
 		if (!hoverPage) {
@@ -274,9 +250,11 @@ function ContentController(props) {
 		onPagesConfigChange()
 	}
 
+	// 编辑文本信息
 	const handleStartEditText = () => {
-		let style = window.getComputedStyle(activeElement.current, null)
-		if (editData) {
+		const style = window.getComputedStyle(activeElement.current, null);
+		if (editTextData) {
+
 			return
 		}
 		let edutData = {
@@ -295,7 +273,7 @@ function ContentController(props) {
 			},
 		}
 		findData().style = edutData.style
-		setEditData(edutData)
+		setEditTextData(edutData)
 		activeElement.current.style.visibility = 'hidden'
 	}
 
@@ -454,16 +432,16 @@ function ContentController(props) {
 				</div>
 			</Popup>
 			<Popup className="toolbar-pupup" refEl={activeElement} visible={!!activeElementId}>
-				{editData && (
+				{editTextData && (
 					<EditTextToolbar
 						onInput={handleEditText}
 						onBlur={() => {
 							activeElement.current.style.visibility = 'visible'
-							setActiveElementId(null)
-							setEditData(null)
+							dispatch(setActiveElementId(null))
+							setEditTextData(null)
 						}}
-						style={editData.style}
-						dangerouslySetInnerHTML={{ __html: editData.text }}
+						style={editTextData.style}
+						dangerouslySetInnerHTML={{ __html: editTextData.text }}
 					/>
 				)}
 				{activeComponentData && activeElement && activeElement.type == 'img' && (

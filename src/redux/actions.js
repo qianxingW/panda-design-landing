@@ -39,3 +39,11 @@ export const setActivePageKey = (data) => {
     data,
   };
 };
+
+// 设置选中的组件ID
+export const setActiveElementId = (data) => {
+  return {
+    type: ActionTypes.ACTIVE_COMPONENT_ID,
+    data,
+  };
+};
