@@ -3,7 +3,9 @@
  */
 
 // 选中的组件id
-export const ACTIVE_COMPONENT_ID = 'ACTIVE_ELEMENT_ID'
+export const SET_ACTIVE_ELEMENT_ID = 'SET_ACTIVE_ELEMENT_ID'
+// 选中的组件
+export const SET_ACTIVE_ELEMENT = 'SET_ACTIVE_ELEMENT'
 
 // 设置选中页面
 export const SET_ACTIVEPAGEKEY = 'SET_ACTIVEPAGEKEY'

@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { useSelector, useDispatch, useStore } from 'react-redux';
-import { setPagesConfig, setActiveElementId } from '../../../redux/actions';
+import { setPagesConfig, setActiveElementId, setActiveElement } from '../../../redux/actions';
 
 import { Spin } from 'antd';
 import {
@@ -21,13 +21,14 @@ import * as element from '../../element';
 import { uuid, findElement, findSelectElementTarget, findTargetIndex, setSettingPagesConfig } from '@utils';
 import { useActiveComponent } from '@utils/hooks';
 
-function ContentController() {
+function ContentController(props) {
+	const { onNavClick } = props;
 	const dispatch = useDispatch()
 	const router = useLocation()
 	const store = useStore()
 	const pagesConfig = useSelector(state => state.pagesConfig)
 	const activePageKey = useSelector(state => state.activePageKey)
-	const activeElementId = useSelector(state => state.activeElementId)
+	const { activeElement, activeElementId } = useSelector(state => state.activeElement)
 	const activePage = useSelector(state => state.pagesConfig?.pages?.filter(item => item.url == state.activePageKey)[0])
 
 	const [dropIndex,] = useState(1)
@@ -38,9 +39,6 @@ function ContentController() {
 	// hover的组件
 	const [hoverElementId, setHoverElementId] = useState(null);
 	const [hoverElement, setHoverElement] = useState({ current: null })
-
-	// 选中的组件
-	const [activeElement, setActiveElement] = useState({ current: null })
 
 	// 修改文字
 	const [editTextData, setEditTextData] = useState(null)
@@ -103,7 +101,7 @@ function ContentController() {
 
 	// 修改的节点name
 	const dataSetName = useMemo(() => {
-		if (!activeElement.current) return null
+		if (!activeElement?.current) return null
 		return activeElement.current.dataset.name
 	}, [activeElement])
 
@@ -124,7 +122,7 @@ function ContentController() {
 
 	// 编辑的节点数据
 	const editElementData = useMemo(() => {
-		if (!dataSetName || !activeElement.type) return null
+		if (!dataSetName || !activeElement?.type) return null
 		return findData()
 	}, [dataSetName, activeElement, activeElementId, activeComponentData])
 
@@ -220,7 +218,8 @@ function ContentController() {
 		}
 
 		dispatch(setActiveElementId(hoverElementId))
-		setActiveElement(hoverElement)
+		dispatch(setActiveElement(hoverElement))
+		onNavClick('editPanel')
 	}
 
 	// move 查询组件

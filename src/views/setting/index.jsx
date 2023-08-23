@@ -5,11 +5,13 @@ import ElementMenu from './components/ElementMenu';
 import NavController from './components/NavController';
 import AddPage from './components/AddPage';
 import ThemeController from './components/ThemeController';
+import EditPanel from './components/EditPanelController';
 
 const defaultOpens = {
   element: false,
   page: false,
-  theme: false
+  theme: false,
+  editPanel: false,
 }
 const Setting = () => {
   const [opens, setOpens] = useState({ ...defaultOpens });
@@ -25,7 +27,7 @@ const Setting = () => {
     setOpens({...defaultOpens})
   }
 
-  const { element, page, theme } = opens;
+  const { element, page, theme, editPanel } = opens;
   return (
     <div className="drag-container">
       <div className="layout page-layout">
@@ -33,7 +35,9 @@ const Setting = () => {
           onNavClick={onNavClick}
         />
         <div className="content">
-          <ContentController />
+          <ContentController
+            onNavClick={onNavClick}
+          />
         </div>
         <ElementMenu
           open={element}
@@ -48,6 +52,10 @@ const Setting = () => {
         />
         <ThemeController
           open={theme}
+          onCloseDrawer={onCloseDrawer}
+        />
+        <EditPanel
+          open={editPanel}
           onCloseDrawer={onCloseDrawer}
         />
       </div>

@@ -14,10 +14,12 @@ export function activePageKey(state = homeUrl, action) {
 	}
 }
 
-export function activeElementId(state = null, action) {
+export function activeElement(state = {activeElementId: null, activeElement: { current: null }}, action) {
 	switch (action.type) {
-		case ActionTypes.ACTIVE_COMPONENT_ID:
-			return action.data
+		case ActionTypes.SET_ACTIVE_ELEMENT_ID:
+			return {...state, activeElementId: action.data}
+		case ActionTypes.SET_ACTIVE_ELEMENT:
+			return {...state, activeElement: action.data }
 		default:
 			return state
 	}
@@ -91,7 +93,7 @@ export function pagesConfig(state = cloneDeep(defaultPagesConfig), action) {
 
 const reducers = combineReducers({
   activePageKey,
-	activeElementId,
+	activeElement,
   pagesConfig,
 });
 

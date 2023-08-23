@@ -43,7 +43,15 @@ export const setActivePageKey = (data) => {
 // 设置选中的组件ID
 export const setActiveElementId = (data) => {
   return {
-    type: ActionTypes.ACTIVE_COMPONENT_ID,
+    type: ActionTypes.SET_ACTIVE_ELEMENT_ID,
+    data,
+  };
+};
+
+// 设置选中的组件
+export const setActiveElement = (data) => {
+  return {
+    type: ActionTypes.SET_ACTIVE_ELEMENT,
     data,
   };
 };

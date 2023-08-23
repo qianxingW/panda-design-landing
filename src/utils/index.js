@@ -1,6 +1,6 @@
 // import { useStore } from 'react-redux';
 import { setPagesConfig } from '../redux/actions';
-
+import _ from 'lodash';
 
 /**
  * 生成uuid
@@ -141,6 +141,28 @@ export const handleRgbaColor = color => {
 	return `rgba(${r},${g},${b},${a})`
 }
 
+/**
+ * 
+ * @param {*} config 
+ * @returns 
+ */
+export const getBackground = config => {
+	const img = config.style.backgroundImage
+	let url = handleUrl(img)
+
+	return {
+		backgroundImage: `url(${url})`,
+		backgroundColor: config.style.backgroundColor,
+		backgroundPosition: 'center',
+		backgroundRepeat: 'no-repeat',
+		backgroundSize: 'cover',
+	}
+}
+/**
+ * 
+ * @param {*} img 
+ * @returns 
+ */
 export const handleUrl = img => {
 	let url = null
 	if (img) {
@@ -157,17 +179,25 @@ export const handleUrl = img => {
 	return url
 }
 
-export const getBackground = config => {
-	const img = config.style.backgroundImage
-	let url = handleUrl(img)
-
-	return {
-		backgroundImage: `url(${url})`,
-		backgroundColor: config.style.backgroundColor,
-		backgroundPosition: 'center',
-		backgroundRepeat: 'no-repeat',
-		backgroundSize: 'cover',
+/**
+ * 
+ * @param {*} e 
+ * @param {*} callback 
+ * @returns 
+ */
+export const handleImgUploadChange = (e, callback) => {
+	if (!e.target.files[0]) {
+		return
 	}
+	let file = e.target.files[0]
+	let form = new FormData()
+	form.append('file', file)
+	form.append('fileName', file.name)
+	form.append('fileType', _.last(file.name.split('.')))
+	// request.hpMagrCommFileUploadFile(form).then(res => {
+	// 	callback(res.data)
+	// })
+	return false
 }
 
 /**
