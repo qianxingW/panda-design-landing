@@ -9,9 +9,6 @@ import {
 	DeleteOutlined
 } from '@ant-design/icons';
 
-// 引入工具类
-// import {  handleImgUpload } from '@/utils/index'
-
 function ImageToolbar(props) {
 	const { target, onChange, settingLink, setLink } = props
 
@@ -38,18 +35,15 @@ function ImageToolbar(props) {
 						showAccept={false}
 						showUploadList={false}
 						ref={uploadRef}
-						action={(file, config) => {
-							return new Promise((resolve) => {
-								// handleImgUpload(file, config, data => {
-								// 	onChange(data.data)
-								// 	resolve(data)
-								// 	uploadRef.current.value = null
-								// })
-							})
-						}}
+						action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
 						onPreview={() => {}}
 						onRemove={() => {}}
-						onChange={() => {}}
+						onChange={(file) => {
+							if(file.file.status === 'done'){
+								onChange(file.file.response.thumbUrl)
+								uploadRef.current.value = null
+							}
+						}}
 					>
 						<FormOutlined />
 					</Upload>

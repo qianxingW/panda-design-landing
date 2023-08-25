@@ -1,7 +1,9 @@
-import { } from 'react'
 import { useSelector } from 'react-redux'
 
 import { Drawer, Breadcrumb } from 'antd';
+import {
+	// DeleteOutlined,
+} from '@ant-design/icons';
 
 import SettingContainer from './Settings';
 
@@ -33,10 +35,10 @@ const EditPanel = (props) => {
     >
       {EditComponent && activeComponentData && activeElementId == activeComponentData.id && (
         <div className="setings" key={activeElementId}>
-          <div className="rootnet-design-drawer-head-close" onClick={onCloseDrawer}>
-            {/* <Icon name="cuowu1" /> */}
+          <div className="setings-head-close" onClick={onCloseDrawer}>
+            {/* <DeleteOutlined  /> */}
           </div>
-          <Breadcrumb className='seting-header' items={breadcrumbItems} />
+          <Breadcrumb className='setings-header' items={breadcrumbItems} />
           <SettingContainer
             key={activeElementId}
             activeData={activeElementId}

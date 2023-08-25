@@ -4,8 +4,7 @@ import { useSelector } from 'react-redux'
 
 import { Collapse } from 'antd'
 
-import { setSettingPagesConfig } from '@utils'
-import { useActiveComponent } from '@utils/hooks'
+import { useActiveComponent, useSetSettingPagesConfig } from '@utils/hooks'
 // 引入样式
 import './index.scss'
 
@@ -21,6 +20,7 @@ function SettingContainer(props) {
 	const { children, pagesRefList } = props;
 	const { activeElement, activeElementId } = useSelector(state => state.activeElement)
 	const [, activeComponentData] = useActiveComponent(activeElementId)
+	const [setSettingPagesConfig] = useSetSettingPagesConfig()
 
 	const [config, setConfig] = useState(null)
 
@@ -31,7 +31,7 @@ function SettingContainer(props) {
 			return
 		}
 		setConfig(pagesRefList[activeElementId].props.config)
-	}, [pagesRefList, activeElementId, activeElement])
+	}, [pagesRefList, activeElementId, activeElement, activeComponentData])
 
 	function handleChange(c) {
 		if (activeElement.type) {
@@ -72,23 +72,29 @@ function SettingContainer(props) {
 		}
 	]
 
-	const items= setingConfig.map((item) => {
-		const { key, label, Component } = item;
+	const getItems = () => {
+		const items = [];
 
-		if (config && !activeElement.type && config[key] !== undefined) {
-			return {
-				key: key,
-				label: label,
-				children: <Component
-					config={config}
-					onChange={e => {
-						handleChange(e)
-					}} />,
+		setingConfig.map((item) => {
+			const { key, label, Component } = item;
+	
+			if (config && !activeElement.type && config[key] !== undefined) {
+				items.push({
+					key: key,
+					label: label,
+					children: <Component
+						config={config}
+						onChange={e => {
+							handleChange(e)
+						}} />,
+				})
 			}
-		}
+	
+			return {}
+		})
 
-		return {}
-	})
+		return items;
+	}
 
 	return (
 		<div className="setings-content">
@@ -103,7 +109,7 @@ function SettingContainer(props) {
 				)}
 			<Collapse
 				bordered={false}
-				items={items}
+				items={getItems()}
 			/>
 		</div>
 	)

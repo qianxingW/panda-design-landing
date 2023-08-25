@@ -287,7 +287,7 @@ body,
 
 // 主题色
 .theme-color-box {
-	width: 268px;
+	width: 100%;
 	height: 32px;
 	border-radius: 2px;
 	// border: 4px solid #e9eaf2;
@@ -440,6 +440,11 @@ body,
 // 工具栏
 .toolbar-pupup {
   z-index: 999;
+
+  .contentEditable-text {
+    display: block;
+    outline: 1px solid #1565ff;
+  }
 }
 
 .toolbar {
@@ -578,5 +583,28 @@ body,
         line-height: 20px;
       }
     }
+  }
+}
+
+// 按钮样式
+.ant-btn.site-button {
+  width: 140px;
+  height: 40px;
+  display: block;
+  border-radius: 4px;
+  line-height: 40px;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  padding: 0;
+  background: var(--button-background-color) !important;
+  color: var(--button-text-color) !important;
+  border: 1px solid var(--button-border-color) !important;
+  transition: all 0.3s;
+
+  &:hover {
+    border-color: var(--button-hover-border-color) !important;
+    background: var(--button-hover-background-color) !important;
+    color: var(--button-hover-text-color) !important;
   }
 }

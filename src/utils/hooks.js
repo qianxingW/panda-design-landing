@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setPagesConfig } from '../redux/actions';
 
 // 引入组件列表
 import * as element from '../views/element'
@@ -75,4 +76,50 @@ export const useActivePage = (url) => {
 	})[0].url;
 
 	return [activePageKey]
+}
+
+/**
+ * 修改组件子节点信息
+ * @param {*} activeComponentData 
+ * @param {*} configItem 
+ * @param {*} store 
+ */
+export const useSetSettingPagesConfig = () => {
+	const pagesConfig = useSelector(state => state.pagesConfig)
+	const activePage = useSelector(state => state.pagesConfig.pages.filter(item => item.url == state.activePageKey)[0])
+	const dispatch = useDispatch()
+
+	function setSettingPagesConfig(activeComponentData, configItem) {
+		if (configItem) {
+			if (activeComponentData.type == 'header') {
+				for (let attr in configItem) {
+					pagesConfig.config.header.props[attr] = configItem[attr]
+				}
+			}
+			if (activeComponentData.type == 'footer') {
+				for (let attr in configItem) {
+					pagesConfig.config.footer.props[attr] = configItem[attr]
+				}
+			}
+			if (activeComponentData.type == 'component') {
+				let c = activePage.content.filter(item => item.id == activeComponentData.id)[0]
+				for (let attr in configItem) {
+					c.props[attr] = configItem[attr]
+				}
+			}
+		} else {
+			if (activeComponentData.type == 'header') {
+				pagesConfig.config.header.props = activeComponentData.props
+			}
+			if (activeComponentData.type == 'footer') {
+				pagesConfig.config.footer.props = activeComponentData.props
+			}
+			if (activeComponentData.type == 'component') {
+				activePage.content.filter(item => item.id == activeComponentData.id)[0].props = activeComponentData.props
+			}
+		}
+		dispatch(setPagesConfig({...pagesConfig}))
+	}
+
+	return [setSettingPagesConfig]
 }

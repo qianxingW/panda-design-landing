@@ -39,6 +39,7 @@ const Setting = () => {
           <ContentController
             pagesRefList={pagesRefList}
             onNavClick={onNavClick}
+            editPanel={editPanel}
           />
         </div>
         <ElementMenu

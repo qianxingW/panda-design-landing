@@ -165,8 +165,12 @@ export default function ImagePic(props) {
 		if (src) {
 			if (src.indexOf('static') != -1 || src.indexOf('pc') != -1) {
 				import('../../' + src).then((res) => {
-					ref.current.src = res.default;
-					bgRef.current.style.backgroundImage =`url(${res.default})`;
+					if(	ref.current) {
+						ref.current.src = res.default;
+					}
+					if(bgRef.current) {
+						bgRef.current.style.backgroundImage =`url(${res.default})`;
+					}
 				})
 				url = src
 			} else if (src.indexOf('base64') != -1) {

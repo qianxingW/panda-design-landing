@@ -1,4 +1,3 @@
-// react 依赖
 import React, { useImperativeHandle } from 'react'
 
 import Settings from './Settings'

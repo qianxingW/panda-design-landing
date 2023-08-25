@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { useSelector, useDispatch, useStore } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { setPagesConfig, setActiveElementId, setActiveElement } from '../../../redux/actions';
 
 import { Spin } from 'antd';
@@ -18,14 +18,13 @@ import { TextToolbar, EditTextToolbar, ButtonToolbar, ImageToolbar } from './Too
 import LinkModal from './LinkModal';
 import * as element from '../../element';
 
-import { uuid, findElement, findSelectElementTarget, findTargetIndex, setSettingPagesConfig } from '@utils';
-import { useActiveComponent } from '@utils/hooks';
+import { uuid, findElement, findSelectElementTarget, findTargetIndex } from '@utils';
+import { useActiveComponent, useSetSettingPagesConfig } from '@utils/hooks';
 
 function ContentController(props) {
 	const { onNavClick, pagesRefList } = props;
 	const dispatch = useDispatch()
 	const router = useLocation()
-	const store = useStore()
 	const pagesConfig = useSelector(state => state.pagesConfig)
 	const activePageKey = useSelector(state => state.activePageKey)
 	const { activeElement, activeElementId } = useSelector(state => state.activeElement)
@@ -45,8 +44,7 @@ function ContentController(props) {
 	const [componentIndex, setComponentIndex] = useState(null)
 
 	const [, activeComponentData] = useActiveComponent(activeElementId)
-
-	
+	const [setSettingPagesConfig] = useSetSettingPagesConfig()
 
 	const dragStart = useRef(null)
 	const dragContent = useRef(null)
@@ -72,7 +70,7 @@ function ContentController(props) {
 
 	// 修改配置
 	const onPagesConfigChange = () => {
-		setSettingPagesConfig(activeComponentData, null, store)
+		setSettingPagesConfig(activeComponentData, null)
 	}
 
 	const onResetPagesConfig = () => {
@@ -89,7 +87,7 @@ function ContentController(props) {
 		}
 		dragContent.current.style.setProperty('--website-theme-color', theme)
 		document.querySelector(':root').style.setProperty('--website-theme-color', theme)
-	}, [pagesConfig?.config?.theme])
+	}, [pagesConfig])
 
 	useEffect(() => {
 		if (activeElementId) {
@@ -125,6 +123,28 @@ function ContentController(props) {
 		if (!dataSetName || !activeElement?.type) return null
 		return findData()
 	}, [dataSetName, activeElement, activeElementId, activeComponentData])
+
+	useEffect(() => {
+		if (!dataSetName && !activeElement.type && !activeComponentData && !activeElement.current) return
+		if (activeElement.type == 'text') {
+			let style = window.getComputedStyle(activeElement.current, null)
+			let styleDefault = {
+				color: style['color'],
+				textAlign: style['textAlign'],
+				fontFamily: style['fontFamily'],
+				letterSpacing: style['letterSpacing'],
+				lineHeight: style['lineHeight'],
+				fontSize: style['fontSize'],
+				fontWeight: style['fontWeight'],
+				textDecoration: style['textDecoration'],
+			}
+			let propsAttr = findData()
+			if (propsAttr) {
+				propsAttr.style = styleDefault
+				setPagesConfig()
+			}
+		}
+	}, [dataSetName, activeElement, activeComponentData])
 
 	const dropOndrop = e => {
 		e.preventDefault()
@@ -196,11 +216,11 @@ function ContentController(props) {
 
 	// 清空状态
 	const clearPopup = () => {
-		// setHoverElementId(null)
-		// setHoverElement({ current: null })
-		// setActiveElementId(null)
-		// setActiveElement({ current: null })
-		// setEditTextData(null)
+		setHoverElementId(null)
+		setHoverElement({ current: null })
+		dispatch(setActiveElementId(null ));
+		dispatch(setActiveElement({ current: null }));
+		setEditTextData(null)
 	}
 
 	// 清空移入状态
@@ -422,7 +442,7 @@ function ContentController(props) {
 					</div>
 				)}
 			</Popup>
-			<Popup className='element-popup' refEl={activeElement} visible={!!activeElementId}>
+			<Popup className='element-popup' refEl={activeElement} visible={!!activeElementId && !editTextData}>
 				<div className="element-active">
 					<div className="item"></div>
 					<div className="item"></div>
@@ -430,7 +450,7 @@ function ContentController(props) {
 					<div className="item"></div>
 				</div>
 			</Popup>
-			<Popup className="toolbar-pupup" refEl={activeElement} visible={!!activeElementId}>
+			<Popup className="toolbar-pupup" refEl={activeElement} visible={!!activeElementId && activeElement.type}>
 				{editTextData && (
 					<EditTextToolbar
 						onInput={handleEditText}

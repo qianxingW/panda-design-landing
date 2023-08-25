@@ -2,14 +2,14 @@ import { Input, Collapse } from 'antd'
 import { useSelector } from 'react-redux'
 
 // 引入工具类
-import { setSettingPagesConfig } from '@utils';
-import { useConfig, useActiveComponent } from '@utils/hooks';
+import { useConfig, useActiveComponent, useSetSettingPagesConfig } from '@utils/hooks';
 
 function Settings(props) {
 	const { pagesRefList } = props
 	const { activeElementId } = useSelector(state => state.activeElement)
 
 	const [, activeComponentData] = useActiveComponent(activeElementId)
+	const [setSettingPagesConfig] = useSetSettingPagesConfig()
 
 	const [config] = useConfig(activeElementId, pagesRefList)
 
@@ -31,8 +31,9 @@ function Settings(props) {
 						<div className="setings-cotnent-list-item" key={index}>
 							<Input
 								value={item.hover.text}
-								onChange={v => {
-									item.hover.text = v
+								onChange={e => {
+									const { value } = e.target;
+									item.hover.text = value
 									// setEditValue(v)
 								}}
 								onBlur={handleBlur}
@@ -47,7 +48,7 @@ function Settings(props) {
 
 	return (
 		<div className="setings-content">
-			<Collapse items={items} />
+			<Collapse items={items} bordered={false} />
 		</div>
 	)
 }

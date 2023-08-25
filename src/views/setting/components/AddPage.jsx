@@ -43,7 +43,7 @@ function Item(props) {
 		if(key === 'edit') {
 			setEdit(!edit);
 		} else {
-			if(data.url != homeUrl) return;
+			if(data.url === homeUrl) return;
 
 			Modal.confirm({
 				title: '提示',
@@ -139,9 +139,13 @@ const AddPage = (props) => {
 				<div className={'addPage-search'}>
 					<div className="addPage-search-input">
 						<Input
+							placeholder='请输入名称'
 							icon={<PlusCircleOutlined />}
-							onChange={v => {
-								setSearch(v)
+							value={search}
+							allowClear
+							onChange={e => {
+								const { value } = e.target;
+								setSearch(value)
 							}}
 						/>
 					</div>
