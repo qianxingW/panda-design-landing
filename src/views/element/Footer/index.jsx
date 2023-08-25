@@ -5,7 +5,7 @@ import { getBackground } from '@utils'
 
 // 引入组件
 import Settings from './Settings'
-import { OpenLink, Image } from '@components'
+import { OpenLink, ImagePic } from '@components'
 
 // 引入样式
 import './index.scss'
@@ -23,7 +23,7 @@ const Footer = (props, ref) => {
 				<div className="footer-company">
 					<div className="footer-logo">
 						<OpenLink data={logo} type={'img'} name={'logo'} edit={true}>
-							<Image src={logo.url} />
+							<ImagePic src={logo.url} />
 						</OpenLink>
 					</div>
 					<OpenLink data={address} type={'text'} name={'address'} edit={true}>
@@ -68,7 +68,7 @@ const Footer = (props, ref) => {
 					<div className="erweima">
 						<div className="erweima-pic">
 							<OpenLink data={erweima} type={'img'} name={'erweima'} edit={true}>
-								<Image src={erweima.url} />
+								<ImagePic src={erweima.url} />
 							</OpenLink>
 						</div>
 						<p>扫码关注</p>
@@ -148,6 +148,6 @@ Footer.TYPE = 'footer'
 
 Footer.NAMECN = '页脚'
 
-Footer.thumbnail = '/pc/static/thumbnail.png'
+Footer.thumbnail = '/static/images/thumbnail.png'
 
 export default React.forwardRef(Footer)

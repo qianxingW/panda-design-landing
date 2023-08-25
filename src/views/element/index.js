@@ -8,7 +8,7 @@
 // export { default as Applicationform } from './Applicationform' //表单-申请表单
 // export { default as Product } from './Product' //产品
 // export { default as EnterprisePartner } from './EnterprisePartner' //合作伙伴
-// export { default as Footer } from './Footer'
+export { default as Footer } from './Footer'
 export { default as Card } from './Card' //卡片
 // export { default as Carousel } from './Carousel' //轮播卡片
 

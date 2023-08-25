@@ -18,7 +18,7 @@ const NavController = (props) => {
   const dispatch = useDispatch()
 
   const handleSavePageConfig = () => {
-
+    localStorage.setItem('pageConfig', JSON.stringify(pagesConfig))
   };
 
   const handleSaveASPageConfig = () => {

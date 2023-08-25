@@ -5,6 +5,7 @@ import { Provider  } from 'react-redux';
 import store from './redux/store';
 
 import Setting from './views/setting';
+import Preview from './views/preview';
 
 import './App.css'
 
@@ -14,6 +15,7 @@ function App() {
       <Router>
         <Routes>
           <Route path='/setting' Component={Setting}></Route>
+          <Route path='/preview' Component={Preview}></Route>
         </Routes>
       </Router>
     </Provider>
