@@ -22,7 +22,7 @@ import { uuid, findElement, findSelectElementTarget, findTargetIndex, setSetting
 import { useActiveComponent } from '@utils/hooks';
 
 function ContentController(props) {
-	const { onNavClick } = props;
+	const { onNavClick, pagesRefList } = props;
 	const dispatch = useDispatch()
 	const router = useLocation()
 	const store = useStore()
@@ -46,7 +46,7 @@ function ContentController(props) {
 
 	const [, activeComponentData] = useActiveComponent(activeElementId)
 
-	const pagesRefList = useRef({})
+	
 
 	const dragStart = useRef(null)
 	const dragContent = useRef(null)

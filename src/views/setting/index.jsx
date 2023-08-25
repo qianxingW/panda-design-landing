@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 import ContentController from './components/ContentController';
 import ElementMenu from './components/ElementMenu';
@@ -15,6 +15,7 @@ const defaultOpens = {
 }
 const Setting = () => {
   const [opens, setOpens] = useState({ ...defaultOpens });
+  const pagesRefList = useRef({})
 
   const onNavClick = (type) => {
     setOpens({
@@ -36,6 +37,7 @@ const Setting = () => {
         />
         <div className="content">
           <ContentController
+            pagesRefList={pagesRefList}
             onNavClick={onNavClick}
           />
         </div>
@@ -55,6 +57,7 @@ const Setting = () => {
           onCloseDrawer={onCloseDrawer}
         />
         <EditPanel
+          pagesRefList={pagesRefList}
           open={editPanel}
           onCloseDrawer={onCloseDrawer}
         />

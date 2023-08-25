@@ -4,7 +4,6 @@ import React, { useImperativeHandle } from 'react'
 import Settings from './Settings'
 import { OpenLink, ImagePic, Container } from '@components'
 
-// 引入样式
 import './index.scss'
 
 const Card = (props, ref) => {

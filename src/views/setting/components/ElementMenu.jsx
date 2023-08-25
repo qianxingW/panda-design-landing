@@ -1,13 +1,11 @@
 import { useMemo } from 'react'
 import { Drawer, Tooltip } from 'antd';
 import * as element from '../../element';
-import thumbnail from '../../../static/images/detail/thumbnail.png'
 
 const ElementMenu = (props) => {
   const { open, onCloseDrawer } = props;
 
   const onDragStart = (e) => {
-    // dragStart.current = true;
     e.dataTransfer.setData('drayType', 'add');
     e.dataTransfer.setData(
       'name',
@@ -27,35 +25,38 @@ const ElementMenu = (props) => {
   const elementList = useMemo(() => {
     let ary = [];
     for (let attr in element) {
-      const { NAMECN, TYPE, } = element[attr].render;
-      const img = <img src={thumbnail || '/pc/static/logo.png'} alt={attr} draggable="true" data-name={attr} data-type={'element'} data-subtype={TYPE} />;
+      const { NAMECN, TYPE, thumbnail } = element[attr].render;
 
-      ary.push(
-        <div
-          className="left-menu-box"
-          onDragStart={onDragStart}
-          draggable="true"
-          data-name={attr}
-          data-type={'element'}
-          data-subtype={TYPE}
-          key={NAMECN}
-        >
-          <div className="title">{NAMECN}</div>
-          <div className="img">
-            <Tooltip
-              placement="right"
-              title={(
-                <div style={{ width: 500 }}>
-                  {img}
-                </div>
-              )}
-              overlayStyle={{ maxWidth: 'none' }}
-            >
-              {img}
-            </Tooltip>
+      import('../../../' + thumbnail).then((res) => {
+        const img = <img src={res.default} alt={attr} draggable="true" data-name={attr} data-type={'element'} data-subtype={TYPE} />;
+
+        ary.push(
+          <div
+            className="left-menu-box"
+            onDragStart={onDragStart}
+            draggable="true"
+            data-name={attr}
+            data-type={'element'}
+            data-subtype={TYPE}
+            key={NAMECN}
+          >
+            <div className="title">{NAMECN}</div>
+            <div className="img">
+              <Tooltip
+                placement="right"
+                title={(
+                  <div style={{ width: 500 }}>
+                    {img}
+                  </div>
+                )}
+                overlayStyle={{ maxWidth: 'none' }}
+              >
+                {img}
+              </Tooltip>
+            </div>
           </div>
-        </div>
-      )
+        )
+      })
     }
     return ary
   }, [])

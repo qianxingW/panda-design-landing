@@ -1,6 +1,12 @@
 import { useState } from 'react'
 
-import { Tabs, Popover, ColorPicker } from 'antd'
+import { Tabs, ColorPicker } from 'antd'
+import {
+	SettingOutlined,
+	CloudUploadOutlined,
+	DeleteOutlined,
+	PictureOutlined,
+} from '@ant-design/icons';
 
 import { ImagePic } from '@components'
 import { handleImgUploadChange, handleRgbaColor } from '@utils'
@@ -24,24 +30,12 @@ function Style(props) {
 	return (
 		<div className="setings-item-content setings-style">
 			<Tabs
-				layout="horizontal"
-				tabList={[
+				tabPosition="left"
+				items={[
 					{
 						key: '1',
-						// name: <Icon size={16} name="shezhi" />,
-					},
-					{
-						key: '2',
-						// name: <Icon size={16} name="border" />,
-					},
-				]}
-				activeTabKey={activeTabKey}
-				changeTabKey={key => setActiveTabKey(key)}
-			>
-				<div style={{ padding: 16 }}>
-					<Popover
-						position="bottom"
-						content={
+						label: <SettingOutlined />,
+						children: <div style={{ padding: 16 }}>
 							<ColorPicker
 								color={color}
 								onChangeComplete={color => {
@@ -50,30 +44,33 @@ function Style(props) {
 									onChange(config)
 								}}
 							/>
-						}
-						popupClassNmae="toolbar-color"
-					>
-						<div className="seting-theme-color-box" style={{ backgroundColor: color }}></div>
-					</Popover>
-				</div>
-				<div className="seting-upload">
-					<div className="list-item">
-						<div className="list-item-content">
-							<div className="list-item-pic">{config.style.backgroundImage && <ImagePic src={config.style.backgroundImage} />}</div>
-							<span></span>
 						</div>
-						<div className="list-item-extra">
-							<div className="list-item-extra-item">
-								{/* <Icon name="shanchu" onClick={handleDelete} /> */}
+					},
+					{
+						key: '2',
+						label: <PictureOutlined />,
+						children: <div className="seting-upload">
+							<div className="list-item">
+								<div className="list-item-content">
+									<div className="list-item-pic">{config.style.backgroundImage && <ImagePic src={config.style.backgroundImage} />}</div>
+									<span></span>
+								</div>
+								<div className="list-item-extra">
+									<div className="list-item-extra-item">
+										<DeleteOutlined onClick={handleDelete} />
+									</div>
+									<label className="list-item-extra-item">
+										<CloudUploadOutlined />
+										<input style={{ display: 'none' }} type="file" accept="image/*" onChange={handleChange} />
+									</label>
+								</div>
 							</div>
-							<label className="list-item-extra-item">
-								{/* <Icon name="shangchuan" /> */}
-								<input style={{ display: 'none' }} type="file" accept="image/*" onChange={handleChange} />
-							</label>
 						</div>
-					</div>
-				</div>
-			</Tabs>
+					},
+				]}
+				activeTabKey={activeTabKey}
+				changeTabKey={key => setActiveTabKey(key)}
+			/>
 		</div>
 	)
 }

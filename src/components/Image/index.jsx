@@ -10,6 +10,7 @@ export default function ImagePic(props) {
 	const { className, alt, style, mode = 'scaleToFill', src, ...prop } = props
 
 	const ref = useRef(null)
+	const bgRef = useRef(null)
 
 	const [load, setLoad] = useState(false)
 	const [imgStyle, setImgStyle] = useState({})
@@ -163,6 +164,10 @@ export default function ImagePic(props) {
 		let url = null
 		if (src) {
 			if (src.indexOf('static') != -1 || src.indexOf('pc') != -1) {
+				import('../../' + src).then((res) => {
+					ref.current.src = res.default;
+					bgRef.current.style.backgroundImage =`url(${res.default})`;
+				})
 				url = src
 			} else if (src.indexOf('base64') != -1) {
 				url = src
@@ -185,7 +190,7 @@ export default function ImagePic(props) {
 			}}
 			{...prop}
 		>
-			<div style={{ backgroundImage: `url(${picSrc})`, ...imgStyle }}></div>
+			<div ref={bgRef} style={{ backgroundImage: `url(${picSrc})`, ...imgStyle }}></div>
 			<img
 				src={picSrc}
 				ref={ref}

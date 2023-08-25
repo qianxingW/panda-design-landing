@@ -1,4 +1,11 @@
 import { Button } from 'antd'
+import {
+	UpOutlined,
+	CloudUploadOutlined,
+	DeleteOutlined,
+	DownOutlined,
+	PlusOutlined
+} from '@ant-design/icons';
 
 import { cloneDeep } from 'lodash'
 
@@ -54,27 +61,27 @@ function List(props) {
 								<div className="list-item-extra">
 									{index > 0 && (
 										<div className="list-item-extra-item" onClick={() => handlePrev(item)}>
-											{/* <Icon name="shang" /> */}
+											<UpOutlined />
 										</div>
 									)}
 									{index < config.list.length - 1 && (
 										<div className="list-item-extra-item" onClick={() => handleNext(item)}>
-											{/* <Icon name="xia" /> */}
+											<DownOutlined />
 										</div>
 									)}
 									<label className="list-item-extra-item">
-										{/* <Icon name="shangchuan" /> */}
+										<CloudUploadOutlined />
 										<input style={{ display: 'none' }} type="file" accept="image/*" onChange={e => handleChange(e, item)} />
 									</label>
 									<div className="list-item-extra-item" onClick={() => handleDelete(item)}>
-										{/* <Icon name="shanchu" /> */}
+										<DeleteOutlined />
 									</div>
 								</div>
 							</div>
 						)
 					})}
 				<div className="list-item-add">
-					<Button className="user-button" type="dashed" icon="jiahao" onClick={handleAdd}>
+					<Button className="user-button" type="primary" icon={<PlusOutlined />} onClick={handleAdd}>
 						添加
 					</Button>
 				</div>

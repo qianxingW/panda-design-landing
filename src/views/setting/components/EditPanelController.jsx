@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 
 import { Drawer, Breadcrumb } from 'antd';
 
-import Settings from './Settings';
+import SettingContainer from './Settings';
 
 import { useActiveComponent } from '@utils/hooks';
 
@@ -14,7 +14,7 @@ const EditPanel = (props) => {
   const activePage = useSelector(state => state.pagesConfig.pages.filter(item => item.url == state.activePageKey)[0])
 
   const [EditComponent, activeComponentData] = useActiveComponent(activeElementId)
-
+  
   const breadcrumbItems = [
     { title: activePage.name },
     { title: activePage.name },
@@ -36,23 +36,23 @@ const EditPanel = (props) => {
           <div className="rootnet-design-drawer-head-close" onClick={onCloseDrawer}>
             {/* <Icon name="cuowu1" /> */}
           </div>
-          <Breadcrumb items={breadcrumbItems} />
-          <Settings
+          <Breadcrumb className='seting-header' items={breadcrumbItems} />
+          <SettingContainer
             key={activeElementId}
             activeData={activeElementId}
             activeElement={activeElement}
-            // pagesRefList={pagesRefList.current}
+            pagesRefList={pagesRefList.current}
           >
             {EditComponent.render.Settings && !activeElement.type && (
               <EditComponent.render.Settings
                 key={activeElementId}
                 activeData={activeElementId}
                 activeElement={activeElement}
-                // pagesRefList={pagesRefList.current}
+                pagesRefList={pagesRefList.current}
                 // settingLink={settingLink}
               />
             )}
-          </Settings>
+          </SettingContainer>
         </div>
       )}
     </Drawer>
