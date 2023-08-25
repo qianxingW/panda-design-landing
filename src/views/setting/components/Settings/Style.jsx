@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 
-import { Tabs, ColorPicker } from 'antd'
+import { Tabs, ColorPicker, Upload } from 'antd'
 import {
 	SettingOutlined,
 	CloudUploadOutlined,
@@ -9,19 +9,13 @@ import {
 } from '@ant-design/icons';
 
 import { ImagePic } from '@components'
-import { handleImgUploadChange, handleRgbaColor } from '@utils'
+import { handleRgbaColor } from '@utils'
 
 function Style(props) {
 	const { config, onChange } = props
-	const [activeTabKey, setActiveTabKey] = useState(1)
+	const [activeTabKey, setActiveTabKey] = useState('style-1')
 	const [color, setColor] = useState(config.style.backgroundColor || '')
-
-	function handleChange(e) {
-		handleImgUploadChange(e, value => {
-			config.style.backgroundImage = value
-			onChange(config)
-		})
-	}
+	const uploadRef = useRef(null)
 
 	function handleDelete() {
 		config.style.backgroundImage = null
@@ -33,10 +27,11 @@ function Style(props) {
 				tabPosition="left"
 				items={[
 					{
-						key: '1',
+						key: 'style-1',
 						label: <SettingOutlined />,
 						children: <div style={{ padding: 16 }}>
 							<ColorPicker
+								className='theme-color-box'
 								color={color}
 								onChangeComplete={color => {
 									setColor(handleRgbaColor(color))
@@ -47,7 +42,7 @@ function Style(props) {
 						</div>
 					},
 					{
-						key: '2',
+						key: 'style-2',
 						label: <PictureOutlined />,
 						children: <div className="seting-upload">
 							<div className="list-item">
@@ -60,16 +55,30 @@ function Style(props) {
 										<DeleteOutlined onClick={handleDelete} />
 									</div>
 									<label className="list-item-extra-item">
-										<CloudUploadOutlined />
-										<input style={{ display: 'none' }} type="file" accept="image/*" onChange={handleChange} />
+										<Upload
+											accept=".png,.jpg,.jpeg,.gif"
+											showAccept={false}
+											showUploadList={false}
+											ref={uploadRef}
+											action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+											onChange={(file) => {
+												if(file.file.status === 'done'){
+													uploadRef.current.value = null
+													config.style.backgroundImage = file.file.response.thumbUrl
+													onChange(config)
+												}
+											}}
+										>
+											<CloudUploadOutlined />
+										</Upload>
 									</label>
 								</div>
 							</div>
 						</div>
 					},
 				]}
-				activeTabKey={activeTabKey}
-				changeTabKey={key => setActiveTabKey(key)}
+				activeKey={activeTabKey}
+				onChange={key => setActiveTabKey(key)}
 			/>
 		</div>
 	)

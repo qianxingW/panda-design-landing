@@ -4,7 +4,7 @@ import _ from 'lodash'
 
 import { Upload, Tooltip } from 'antd'
 import {
-	FormOutlined,
+	CloudUploadOutlined,
 	LinkOutlined,
 	DeleteOutlined
 } from '@ant-design/icons';
@@ -36,8 +36,6 @@ function ImageToolbar(props) {
 						showUploadList={false}
 						ref={uploadRef}
 						action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-						onPreview={() => {}}
-						onRemove={() => {}}
 						onChange={(file) => {
 							if(file.file.status === 'done'){
 								onChange(file.file.response.thumbUrl)
@@ -45,7 +43,7 @@ function ImageToolbar(props) {
 							}
 						}}
 					>
-						<FormOutlined />
+						<CloudUploadOutlined />
 					</Upload>
 				</div>
 				<div className="toolbar-item" onClick={handleLink}>

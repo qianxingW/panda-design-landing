@@ -114,6 +114,7 @@ function TextToolbar(props) {
 				<Popover
 					content={
 						<ColorPicker
+							className='theme-color-box'
 							color={{ rgb: getStyle('color'), hex: getStyle('color') }}
 							onChangeComplete={color => {
 								setStyle('color', handleRgbaColor(color))

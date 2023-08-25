@@ -1,4 +1,5 @@
-import { Button } from 'antd'
+import { useRef } from 'react';
+import { Button, Upload } from 'antd'
 import {
 	UpOutlined,
 	CloudUploadOutlined,
@@ -9,26 +10,16 @@ import {
 
 import { cloneDeep } from 'lodash'
 
-import { handleImgUploadChange } from '@utils'
-
 import { ImagePic } from '@components'
 
 function List(props) {
 	const { config, onChange } = props
+	const uploadRef = useRef()
 
 	function handleDelete(data) {
 		let index = config.list.indexOf(data)
 		config.list.splice(index, 1)
 		onChange(config)
-	}
-
-	function handleChange(e, data) {
-		let index = config.list.indexOf(data)
-
-		handleImgUploadChange(e, value => {
-			config.list[index].img.url = value
-			onChange(config)
-		})
 	}
 
 	function handleAdd() {
@@ -70,8 +61,23 @@ function List(props) {
 										</div>
 									)}
 									<label className="list-item-extra-item">
-										<CloudUploadOutlined />
-										<input style={{ display: 'none' }} type="file" accept="image/*" onChange={e => handleChange(e, item)} />
+										<Upload
+											accept=".png,.jpg,.jpeg,.gif"
+											showAccept={false}
+											showUploadList={false}
+											ref={uploadRef}
+											action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+											onChange={(file) => {
+												if(file.file.status === 'done'){
+													let index = config.list.indexOf(item);
+													uploadRef.current.value = null
+													config.list[index].img.url = file.file.response.thumbUrl
+													onChange(config)
+												}
+											}}
+										>
+											<CloudUploadOutlined />
+										</Upload>
 									</label>
 									<div className="list-item-extra-item" onClick={() => handleDelete(item)}>
 										<DeleteOutlined />
