@@ -8,20 +8,7 @@ export const defaultPagesConfig = {
     footer: null,
     theme: '#1565FF'
   },
-  menu: [
-    {
-      title: '关于我们',
-      id: 'aa9fed94 - d352 - 4db3- 9911 - 4340f4435570',
-      url: '',
-      link: {
-        type: 'page',
-        data: {
-          page: '9c73e6c1- 0c7a- 4ce3 - bad4 - d4fd2bd057e9',
-          pageType: 1
-        }
-      }
-    }
-  ],
+  menu: [],
   pages: [{
     name: '首页',
     url: 'cf773bf6-9b45-4999-977c-57ea56ff8047',

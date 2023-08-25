@@ -180,10 +180,10 @@ function ContentController(props) {
 					},
 				}
 
-				setPagesConfig({
+				dispatch(setPagesConfig({
 					...pagesConfig,
 					...config,
-				})
+				}))
 			}
 
 			// 处理尾部
@@ -195,10 +195,10 @@ function ContentController(props) {
 						footer: template,
 					},
 				}
-				setPagesConfig({
+				dispatch(setPagesConfig({
 					...pagesConfig,
 					...config,
-				})
+				}))
 			}
 
 			// 其他情况

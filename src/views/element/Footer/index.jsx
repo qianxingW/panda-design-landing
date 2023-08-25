@@ -1,5 +1,6 @@
 // react 依赖
-import React, { useImperativeHandle, useContext } from 'react'
+import React, { useImperativeHandle } from 'react'
+import { useSelector } from 'react-redux'
 
 import { getBackground } from '@utils'
 
@@ -12,8 +13,7 @@ import './index.scss'
 
 const Footer = (props, ref) => {
 	const { logo, url, phone, address, erweima, icp, config } = props
-
-	const pageContext = useContext()
+	const pagesConfig = useSelector(state => state.pagesConfig)
 
 	useImperativeHandle(ref, () => props)
 
@@ -38,7 +38,7 @@ const Footer = (props, ref) => {
 				</div>
 				<div className="footer-narbar">
 					<ul className="footer-ul">
-						{pageContext.menu.map((item, index) => {
+						{pagesConfig.menu.map((item, index) => {
 							return (
 								<li className="footer-ul-level-1" key={index}>
 									<OpenLink data={item}>
@@ -112,7 +112,7 @@ Footer.config = {
 		style: {},
 	},
 	erweima: {
-		url: '/pc/static/erweima.png',
+		url: '/static/images/erweima.png',
 		width: '',
 		height: '',
 		link: null,
@@ -122,7 +122,7 @@ Footer.config = {
 		},
 	},
 	logo: {
-		url: '/pc/static/logo.png',
+		url: '/static/images/logo.png',
 		width: '',
 		height: '',
 		link: null,
@@ -148,6 +148,6 @@ Footer.TYPE = 'footer'
 
 Footer.NAMECN = '页脚'
 
-Footer.thumbnail = '/static/images/thumbnail.png'
+Footer.thumbnail = '/static/images/footer/thumbnail.png'
 
 export default React.forwardRef(Footer)
