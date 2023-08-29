@@ -18,3 +18,13 @@ export const ADD_PAGESCONFIG = 'ADD_PAGESCONFIG'
 export const EDIT_PAGESCONFIG = 'EDIT_PAGESCONFIG'
 // 删除页面配置
 export const DEL_PAGESCONFIG = 'DEL_PAGESCONFIG'
+
+
+// 设置菜单
+export const SET_MENU = 'SET_MENU'
+// 增加页面配置
+export const ADD_MENU = 'ADD_MENU'
+// 修改页面配置
+export const EDIT_MENU = 'EDIT_MENU'
+// 删除页面配置
+export const DEL_MENU = 'DEL_MENU'

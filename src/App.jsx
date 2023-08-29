@@ -15,7 +15,7 @@ function App() {
       <Router>
         <Routes>
           <Route path='/setting' Component={Setting}></Route>
-          <Route path='/preview' Component={Preview}></Route>
+          {/* <Route path='/preview' Component={Preview}></Route> */}
         </Routes>
       </Router>
     </Provider>

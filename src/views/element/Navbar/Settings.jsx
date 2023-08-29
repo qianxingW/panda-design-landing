@@ -1,52 +1,34 @@
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { setPagesConfig, addMenu, delMenu, editMenu } from '../../../redux/actions'
 
-// 引入第三方依赖
-import _ from 'lodash'
-
-
-import { Tree, Input, Operation, Collapse, Radio } from 'antd'
+import { Tree, Input, Collapse, Dropdown } from 'antd'
 import {
 	PlusOutlined,
 	UpOutlined,
-	DownOutlined
+	DownOutlined,
+	EllipsisOutlined
 } from '@ant-design/icons';
 
-// 数据请求
-//
-
-// 引入redux定义
-import * as ActionTypes from '@/actions/index'
+import _ from 'lodash'
 
 // 引入工具类
-import { uuid, pidConvertTree, useActiveComponent, setSettingPagesConfig, useConfig } from '@/utils/index'
-
-// 引入样式
+import { uuid, pidConvertTree } from '@utils'
+import { useConfig } from '@utils/hooks'
 
 function Settings(props) {
 	const { activeData, pagesRefList, settingLink } = props
 
 	const pagesConfig = useSelector(state => state.pagesConfig)
-	const dispatch = useDispatch()
 
 	const [menuData, setMenuData] = useState(pidConvertTree(pagesConfig.menu))
 	const [editData, setEditData] = useState(null)
-	const [, activeComponentData] = useActiveComponent(activeData)
 
-	const [config, setConfig] = useConfig(activeData, pagesRefList)
+	const [config] = useConfig(activeData, pagesRefList)
 
 	useEffect(() => {
 		setMenuData(pidConvertTree(pagesConfig.menu))
 	}, [pagesConfig])
-
-	function handleChange(c) {
-		let newConfig = { ...config }
-		for (let attr in c) {
-			newConfig[attr] = c[attr]
-		}
-		setConfig(newConfig)
-		setSettingPagesConfig(activeComponentData, c)
-	}
 
 	function handlePrev(data) {
 		let menuIndex = null
@@ -72,10 +54,10 @@ function Settings(props) {
 		let n = pagesConfig.menu[pIndex]
 		pagesConfig.menu[pIndex] = pagesConfig.menu[nIndex]
 		pagesConfig.menu[nIndex] = n
-		dispatch({
-			type: ActionTypes.SET_PAGESCONFIG,
-			data: { ...pagesConfig },
-		})
+		// dispatch({
+		// 	type: ActionTypes.SET_PAGESCONFIG,
+		// 	data: { ...pagesConfig },
+		// })
 	}
 	function handleNext(data) {
 		let menuIndex = null
@@ -104,39 +86,52 @@ function Settings(props) {
 		pagesConfig.menu[pIndex] = pagesConfig.menu[nIndex]
 		pagesConfig.menu[nIndex] = n
 
-		dispatch({
-			type: ActionTypes.SET_PAGESCONFIG,
-			data: { ...pagesConfig },
-		})
+		// dispatch({
+		// 	type: ActionTypes.SET_PAGESCONFIG,
+		// 	data: { ...pagesConfig },
+		// })
 	}
 
 	if (!config) return null
 
 	return (
-		<>
-			<Collapse.Item title="布局设置" open>
-				<div className="layoutSetup-wrap setings-layout">
-					<div className="layoutSetup-switch">
-						<span>登录</span>
-						<Radio.Group
-							onChange={v => {
-								handleChange({
-									isButton: v,
-								})
-							}}
-							checked={config.isButton}
-						>
-							<Radio value={true}>是</Radio>
-							<Radio value={false}>否</Radio>
-						</Radio.Group>
-					</div>
-				</div>
-			</Collapse.Item>
-			<Collapse.Item
-				title="菜单"
-				open
-				extra={
-					<PlusOutlined onClick={() => {
+		<Collapse
+			bordered={false}
+			items={[
+				{
+					key: '1',
+					label: '菜单',
+					children: <Tree
+						treeData={menuData}
+						rowKey="id"
+						titleRender={(data) => (
+							<Item
+								key={data.id}
+								data={data}
+								editData={editData}
+								handlePrev={handlePrev}
+								handleNext={handleNext}
+								onChildren={() => {
+									let id = uuid()
+									if (!data.children) {
+										data.children = []
+									}
+									data.children.push({
+										title: '菜单名称',
+										id: id,
+										url: '',
+										pid: data.id,
+									})
+									setEditData(id)
+								}}
+								onDelete={() => {
+									setEditData(null)
+								}}
+								settingLink={settingLink}
+							/>
+						)}
+					/>,
+					extra: <PlusOutlined onClick={() => {
 						let id = uuid()
 						menuData.push({
 							title: '',
@@ -145,53 +140,18 @@ function Settings(props) {
 						})
 						setEditData(id)
 						setMenuData([...menuData])
-					}}/>
+					}} />,
 				}
-			>
-				<Tree
-					dataSource={menuData}
-					rowKey="id"
-					onRow={(data, index, layer) => (
-						<Item
-							key={data.id}
-							data={data}
-							menuData={menuData}
-							index={index}
-							layer={layer}
-							editData={editData}
-							handlePrev={handlePrev}
-							handleNext={handleNext}
-							onChildren={() => {
-								let id = uuid()
-								if (!data.children) {
-									data.children = []
-								}
-								data.children.push({
-									title: '菜单名称',
-									id: id,
-									url: '',
-									pid: data.id,
-								})
-								setEditData(id)
-							}}
-							onDelete={() => {
-								setEditData(null)
-							}}
-							onSave={() => {}}
-							settingLink={settingLink}
-						/>
-					)}
-				/>
-			</Collapse.Item>
-		</>
+			]}
+		/>
 	)
 }
 
 function Item(props) {
-	const { data, menuData, index, layer, editData, onDelete, settingLink, onChildren, handlePrev, handleNext } = props
+	const { data, editData, onDelete, settingLink, onChildren, handlePrev, handleNext } = props
+
 	const [edit, setEdit] = useState(false)
 	const [editValue, setEditValue] = useState(data.name)
-
 	const dispatch = useDispatch()
 	const pagesConfig = useSelector(state => state.pagesConfig)
 
@@ -199,38 +159,90 @@ function Item(props) {
 		setEdit(editData == data.id)
 	}, [data, editData])
 
+	const items = [
+		{
+			key: 'add',
+			label: "添加子菜单",
+		},
+		{
+			key: 'rename',
+			label: "重命名",
+		},
+		{
+			key: 'setLink',
+			label: "配置链接",
+		},
+		{
+			key: 'cancelLink',
+			label: "取消链接",
+		},
+		{
+			key: 'del',
+			label: "删除",
+		}
+	];
+
+	const onClick = ({ key }) => {
+		switch (key) {
+			case 'add':
+				onChildren()
+				break;
+			case 'rename':
+				setEdit(!edit)
+				break;
+			case 'setLink':
+				// eslint-disable-next-line no-case-declarations
+				const menuLink = pagesConfig.menu.filter(item => item.id == data.id)[0].link;
+				settingLink(menuLink, link => {
+					pagesConfig.menu.forEach(item => {
+						if (item.id == data.id) {
+							item.link = _.cloneDeep(link)
+						}
+					})
+					dispatch(setPagesConfig({ ...pagesConfig }))
+				})
+				break;
+			case 'cancelLink':
+				pagesConfig.menu.forEach(item => {
+					if (item.id == data.id) {
+						item.link = null
+					}
+				})
+				dispatch(setPagesConfig({ ...pagesConfig }))
+				break;
+			case 'del':
+				dispatch(delMenu(data))
+				break;
+			default:
+				break;
+		}
+	}
+
 	return (
 		<div className="setings-navbar-item">
 			<div className="setings-navbar-item-content">
 				{edit ? (
 					<Input
 						value={data.title}
-						onChange={v => {
-							setEditValue(v)
+						onChange={e => {
+							setEditValue(e.target.value)
 						}}
 						onBlur={() => {
 							if (!editValue) return
 							if (editData) {
 								// 新增
-								dispatch({
-									type: ActionTypes.ADD_MENU,
-									data: {
+								dispatch(addMenu({
 										...data,
 										title: editValue,
-									},
-								})
+									}))
 								onDelete()
 							} else {
 								let obj = data
 								delete obj.children
-								dispatch({
-									type: ActionTypes.EDIT_MENU,
-									data: {
+								dispatch(editMenu({
 										...obj,
 										title: editValue,
-									},
-								})
-								// 编辑
+									}))
 							}
 							setEdit(false)
 						}}
@@ -240,76 +252,15 @@ function Item(props) {
 				)}
 			</div>
 			<div className="setings-navbar-item-edit">
-				{/* <Operation>
-					{index > 0 && layer == 0 && (
-						<Operation.Item onClick={() => handlePrev(data)}>
-							<UpOutlined />
-						</Operation.Item>
-					)}
-					{index < menuData.length - 1 && layer == 0 && (
-						<Operation.Item onClick={() => handleNext(data)}>
-							<DownOutlined />
-						</Operation.Item>
-					)}
-
-					<Operation.Popup position="bottom-right">
-						<Operation.Item
-							onClick={() => {
-								onChildren()
-							}}
-						>
-							添加子菜单
-						</Operation.Item>
-						<Operation.Item onClick={() => setEdit(!edit)}>重命名</Operation.Item>
-						{!data.children && (
-							<Operation.Item
-								onClick={() => {
-									let menuLink = pagesConfig.menu.filter(item => item.id == data.id)[0].link
-									settingLink(menuLink, link => {
-										pagesConfig.menu.forEach(item => {
-											if (item.id == data.id) {
-												item.link = _.cloneDeep(link)
-											}
-										})
-										dispatch({
-											type: ActionTypes.SET_PAGESCONFIG,
-											data: { ...pagesConfig },
-										})
-									})
-								}}
-							>
-								配置链接
-							</Operation.Item>
-						)}
-						{data.link && (
-							<Operation.Item
-								onClick={() => {
-									pagesConfig.menu.forEach(item => {
-										if (item.id == data.id) {
-											item.link = null
-										}
-									})
-									dispatch({
-										type: ActionTypes.SET_PAGESCONFIG,
-										data: { ...pagesConfig },
-									})
-								}}
-							>
-								取消链接
-							</Operation.Item>
-						)}
-						<Operation.Item
-							onClick={() => {
-								dispatch({
-									type: ActionTypes.DEL_MENU,
-									data,
-								})
-							}}
-						>
-							删除
-						</Operation.Item>
-					</Operation.Popup>
-				</Operation> */}
+				{(
+					<UpOutlined onClick={() => handlePrev(data)} />
+				)}
+				{(
+					<DownOutlined onClick={() => handleNext(data)} />
+				)}
+				<Dropdown menu={{ items, onClick }}>
+					<EllipsisOutlined />
+				</Dropdown>
 			</div>
 		</div>
 	)

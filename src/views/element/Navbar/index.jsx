@@ -4,27 +4,19 @@ import { useSelector } from 'react-redux'
 
 import { useParams } from 'react-router-dom'
 
-import { Button, message } from 'antd'
-
-// 引入组件
 import Settings from './Settings'
-import { OpenLink, Image } from '@components'
+import { OpenLink, ImagePic } from '@components'
 
 // 引入样式
 import './index.scss'
 
 // 引入静态资源
 import clsx from 'clsx'
-import { homeUrl } from '@/config/index'
+import { homeUrl } from '../../../redux/template.config'
 
 const Navbar = (props, ref) => {
-	const { isButton } = props
-
-	const userInfo = useSelector(state => state.userInfo)
-
 	const params = useParams()
-
-	const pageContext = {}
+	const pagesConfig = useSelector(state => state.pagesConfig)
 
 	const [isShadow, setIsShadow] = useState(false)
 
@@ -62,14 +54,6 @@ const Navbar = (props, ref) => {
 		[params.id],
 	)
 
-	const handleRouterPush = url => {
-		if (pageContext.type == 'preview') {
-			message.warning('预览状态无法访问个人中心')
-			return
-		}
-		window.open(url)
-	}
-
 	return (
 		<div className="navbar-wrap">
 			<div
@@ -80,11 +64,11 @@ const Navbar = (props, ref) => {
 				<div className="box-content">
 					<div className="navbar-logo">
 						<OpenLink data={props.logo} type={'img'} name={'logo'} edit={true}>
-							<Image src={props.logo.url} alt="logo" />
+							<ImagePic src={props.logo.url} alt="logo" />
 						</OpenLink>
 					</div>
 					<ul className="navbar-ul">
-						{pageContext.menu.map((item, index) => {
+						{pagesConfig.menu.map((item, index) => {
 							return (
 								<li className="navbar-ul-level-1" key={index}>
 									<OpenLink data={item}>
@@ -121,17 +105,6 @@ const Navbar = (props, ref) => {
 							)
 						})}
 					</ul>
-					{isButton && !userInfo && (
-						<div className="navbar-login">
-							<Button onClick={() => handleRouterPush('/registered')}>注册</Button>
-							<Button onClick={() => handleRouterPush('/login')}>登录</Button>
-						</div>
-					)}
-					{/* {isButton && userInfo && (
-						<div onClick={() => router.push('/user')} className={clsx('narbar-investor')}>
-							<span>你好，{userInfo.investorName} </span>
-						</div>
-					)} */}
 				</div>
 			</div>
 		</div>
@@ -163,6 +136,6 @@ Navbar.TYPE = 'header'
 
 Navbar.NAMECN = '菜单'
 
-Navbar.thumbnail = '/static/images/navbar/thumbnail.png'
+Navbar.thumbnail = '/static/images/card/thumbnail.png'
 
 export default React.forwardRef(Navbar)

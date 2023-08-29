@@ -55,3 +55,27 @@ export const setActiveElement = (data) => {
     data,
   };
 };
+
+// 设置菜单
+export const addMenu = (data) => {
+  return {
+    type: ActionTypes.ADD_MENU,
+    data,
+  };
+};
+
+// 修改菜单
+export const editMenu = (data) => {
+  return {
+    type: ActionTypes.EDIT_MENU,
+    data,
+  };
+};
+
+// 删除菜单
+export const delMenu = (data) => {
+  return {
+    type: ActionTypes.DEL_MENU,
+    data,
+  };
+};

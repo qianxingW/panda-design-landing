@@ -226,3 +226,29 @@ export const getUrlSearchData = () => {
 	})
 	return searchObj
 }
+
+/**
+ * 
+ * @param {*} data 
+ * @returns 
+ */
+export const pidConvertTree = data => {
+	let fullData = _.cloneDeep(data)
+	let newData = fullData.filter(item => !item.pid).map(item => moreMenu(item))
+
+	function moreMenu(sub) {
+		for (let i = 0; i < fullData.length; i++) {
+			let item = fullData[i]
+			if (item.pid == sub.id) {
+				fullData.splice(i, 1)
+				i--
+				if (!sub.children) {
+					sub.children = []
+				}
+				sub.children.push(moreMenu(item))
+			}
+		}
+		return sub
+	}
+	return newData
+}

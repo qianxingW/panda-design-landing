@@ -1,6 +1,6 @@
 // import dynamic from 'next/dynamic'
 
-// export { default as Navbar } from './Navbar'
+export { default as Navbar } from './Navbar'
 // // export { default as Banner } from './Banner'; //banner 模板1
 // // export { default as BannerType } from './BannerType'; //banner2 模板2
 // export { default as CardFill } from './CardFill' //数据-图片填充 模板2

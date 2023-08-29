@@ -105,21 +105,6 @@
 				}
 			}
 		}
-
-		&-login {
-			display: flex;
-			align-items: center;
-			padding-left: 24px;
-
-			& > * {
-				margin-left: 16px;
-			}
-			button:hover {
-				color: #fff;
-				background-color: var(--website-theme-color);
-				border-color: var(--website-theme-color);
-			}
-		}
 	}
 }
 
@@ -137,6 +122,10 @@
 	&-edit {
 		margin-left: 15px;
 		display: block;
+
+		.anticon {
+			margin: 0 4px;
+		}
 	}
 }
 
